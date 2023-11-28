@@ -112,7 +112,7 @@ const Stylenav = () => {
 												/>
 											</div>
 											<div className="hidden md:block">
-												<div className="ml-10 flex items-baseline space-x-4 max-lg:hidden">
+												<div className="ml-10 flex items-baseline space-x-4 max-lg:space-x-0.5 max-lg:ml-5">
 													{navigation.map((item) => (
 														<a
 															key={item.name}

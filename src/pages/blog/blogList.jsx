@@ -170,7 +170,7 @@ const BlogList = () => {
 						</Button>
 					</Box>
 				</div>
-				<div className="px-12 pt-16">
+				<div className="px-12 pt-16 max-md:px-0">
 					<div blog={{ height: "100%", width: "100%" }}>
 						<DataGrid
 							rows={rows}
