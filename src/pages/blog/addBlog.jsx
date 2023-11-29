@@ -67,6 +67,7 @@ const VisuallyHiddenInput = styled("input")({
 const AddBlog = () => {
 	const [key, setKey] = useState("post");
 	const [show, setShow] = useState("");
+	const [flag, setFlag] = useState(false);
 	const [data, setData] = useState({
 		post_date: "",
 		contributor: "",
@@ -74,7 +75,7 @@ const AddBlog = () => {
 		title_character: "",
 		coupon: "",
 		signature: "",
-		uploadImage: "",
+		uploadImage: null,
 		post_text: "",
 	});
 
@@ -113,6 +114,7 @@ const AddBlog = () => {
 			[key]: e.target.files[0],
 		}));
 		setShow(URL.createObjectURL(e.target.files[0]));
+		setFlag(true);
 	};
 
 	const handleSubmit = (e) => {
@@ -163,6 +165,9 @@ const AddBlog = () => {
 		jason: false,
 		antoine: true,
 	});
+	console.log("flag: ", flag);
+	console.log("show:", show);
+	console.log("uploadImage:", data.uploadImage);
 
 	//textarea
 
@@ -204,13 +209,13 @@ const AddBlog = () => {
 					<Stylenav />
 					<header className="bg-white shadow">
 						<div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
-							<h1 className="text-3xl font-bold tracking-tight text-gray-900">
+							<h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
 								ブログ
 							</h1>
 						</div>
 					</header>
 					<main>
-						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem]">
+						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
 							<div>
 								<form onSubmit={handleSubmit}>
 									<div className="container-xl m-auto">
@@ -333,7 +338,7 @@ const AddBlog = () => {
 												</AppBar>
 												<Card className="flex justify-start w-full">
 													<CardContent className="rounded-tr-none">
-														<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col">
+														<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col max-md:px-0 max-md:justify-center">
 															<Box>
 																<div className="mt-3 mb-3">投稿日時</div>
 																<div className="flex flex-row pb-2">
@@ -700,10 +705,10 @@ const AddBlog = () => {
 														{/* <Button color="inherit">Login</Button> */}
 													</Toolbar>
 												</AppBar>
-												<Card className="flex justify-start w-full">
+												<Card className="flex justify-start w-full max-md:justify-center">
 													<CardContent className="rounded-tr-none">
 														<div>
-															<Box className="pl-24">
+															<div className="pl-24 max-md:px-4">
 																{/* <Button
 																component="label"
 																variant="contained"
@@ -716,7 +721,7 @@ const AddBlog = () => {
 																<div className="flex justify-between flex-col h-[20rem]">
 																	<div className="flex justify-center items-center pt-5 pb-5">
 																		<img
-																			src={show}
+																			src={flag ? show : data.uploadImage}
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
 																			className="w-40 h-40"
 																		/>
@@ -738,9 +743,9 @@ const AddBlog = () => {
 																		</Button>
 																	</div>
 																</div>
-															</Box>
-															<Box>
-																<FormGroup className="w-[55rem] pl-24 pt-8 pb-4">
+															</div>
+															<div>
+																<FormGroup className="w-[55rem] pl-24 pt-8 pb-4 max-md:w-[18rem] max-md:px-4">
 																	<Form.Control
 																		as="textarea"
 																		rows={15}
@@ -750,7 +755,7 @@ const AddBlog = () => {
 																		onChange={handleChangeTextarea}
 																	/>
 																</FormGroup>
-															</Box>
+															</div>
 														</div>
 													</CardContent>
 												</Card>
@@ -761,7 +766,7 @@ const AddBlog = () => {
 										<Box>
 											<Button
 												variant="contained"
-												className="pt-3 pb-3 w-72"
+												className="pt-3 pb-3 w-72 max-md:w-48"
 												type="submit"
 											>
 												追加

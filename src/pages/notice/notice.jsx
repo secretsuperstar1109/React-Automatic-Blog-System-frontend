@@ -66,13 +66,13 @@ const Notice = () => {
 					<Stylenav />
 					<header className="bg-white shadow">
 						<div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
-							<h1 className="text-3xl font-bold tracking-tight text-gray-900">
+							<h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
 								お知らせ
 							</h1>
 						</div>
 					</header>
 					<main>
-						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem]">
+						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
 							<div>
 								<div className="container-xl m-auto">
 									<div className="flex flex-col justify-center items-center w-full">
@@ -101,9 +101,12 @@ const Notice = () => {
 													{/* <Button color="inherit">Login</Button> */}
 												</Toolbar>
 											</AppBar>
-											<Card className="flex justify-start w-full pl-8">
+											<Card className="flex justify-start w-full pl-8 max-md:justify-center max-md:px-2">
 												<CardContent className="rounded-tr-none">
-													<div className="w-[55rem]" onClick={handleShow}>
+													<div
+														className="w-[55rem] max-md:w-full"
+														onClick={handleShow}
+													>
 														<div>
 															<div className="pt-6">
 																<div className="pb-2">
@@ -129,16 +132,18 @@ const Notice = () => {
 													<Modal
 														show={show}
 														onHide={handleClose}
-														className="px-8"
+														className="px-8 max-md:px-0 max-md:w-full max-md:mt-14"
 													>
 														<Modal.Header closeButton>
-															<Modal.Title>2023-11-13</Modal.Title>
+															<Modal.Title className="max-md:text-xl">
+																2023-11-13
+															</Modal.Title>
 														</Modal.Header>
 														<Modal.Body>
-															<div className="text-xl pb-3">
+															<div className="text-xl pb-3 max-md:text-lg">
 																【口コミ自動返信機能β版】リリース
 															</div>
-															<div className="text-lg">
+															<div className="text-lg max-md:text-base">
 																<div className="pb-3">
 																	平素より『Style
 																	Tokyo』をご利用いただきまして誠にありがとうございます。

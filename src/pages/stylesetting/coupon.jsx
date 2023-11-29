@@ -91,7 +91,7 @@ const Coupon = () => {
 		<>
 			<div className="container-xl min-h-screen">
 				<div className="flex flex-col justify-center items-center w-full">
-					<div className="mt-8 flex justify-center items-center">
+					<div className="mt-8 flex justify-center items-center gap-x-6 flex-wrap max-md:gap-y-6">
 						<Button
 							variant="contained"
 							onClick={add_style}
@@ -99,11 +99,11 @@ const Coupon = () => {
 						>
 							同期する
 						</Button>
-						<Typography variant="h7" className="pl-12">
+						<Typography variant="h7">
 							最終同期 2023-11-13 10:41
 						</Typography>
 					</div>
-					<div className="px-12 pt-10 w-3/7">
+					<div className="px-12 pt-10 w-3/7 max-md:w-full max-md:px-0">
 						<div style={{ height: "100%", width: "100%" }}>
 							<DataGrid
 								rows={rows}

@@ -226,13 +226,13 @@ const UpdateBlog = () => {
 					<Stylenav />
 					<header className="bg-white shadow">
 						<div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
-							<h1 className="text-3xl font-bold tracking-tight text-gray-900">
+							<h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
 								ブログ
 							</h1>
 						</div>
 					</header>
 					<main>
-						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem]">
+						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
 							<div>
 								<form onSubmit={handleSubmit}>
 									<div className="container-xl m-auto">
@@ -355,7 +355,7 @@ const UpdateBlog = () => {
 												</AppBar>
 												<Card className="flex justify-start w-full">
 													<CardContent className="rounded-tr-none">
-														<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col">
+														<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col max-md:px-0 max-md:justify-center">
 															<Box>
 																<div className="mt-3 mb-3">投稿日時</div>
 																<div className="flex flex-row pb-2">
@@ -435,7 +435,10 @@ const UpdateBlog = () => {
 																	</FormControl>
 																</div>
 															</Box>
-															<Box sx={{ minWidth: 300 }} className="pb-6 pt-4">
+															<Box
+																sx={{ minWidth: 300 }}
+																className="pb-6 pt-4 max-md:w-[17rem]"
+															>
 																<Typography className="pb-3">
 																	タイトル ※25文字
 																</Typography>
@@ -450,7 +453,10 @@ const UpdateBlog = () => {
 																	/>
 																</FormControl>
 															</Box>
-															<Box sx={{ minWidth: 300 }} className="pb-6">
+															<Box
+																sx={{ minWidth: 300 }}
+																className="pb-6 max-md:w-[16rem]"
+															>
 																<Typography className="pb-3">
 																	クーポン
 																</Typography>
@@ -665,7 +671,10 @@ const UpdateBlog = () => {
 																	</Select>
 																</FormControl>
 															</Box>
-															<Box sx={{ minWidth: 300 }} className="pb-6">
+															<Box
+																sx={{ minWidth: 300 }}
+																className="pb-6 max-md:w-[16rem]"
+															>
 																<Typography className="pb-3">署名</Typography>
 																<FormControl className="w-full">
 																	<InputLabel id="demo-simple-select-label">
@@ -722,10 +731,10 @@ const UpdateBlog = () => {
 														{/* <Button color="inherit">Login</Button> */}
 													</Toolbar>
 												</AppBar>
-												<Card className="flex justify-start w-full">
+												<Card className="flex justify-start w-full max-md:justify-center">
 													<CardContent className="rounded-tr-none">
-														<div>
-															<Box className="pl-24">
+														<div className="w-full">
+															<div className="pl-24 max-md:pl-0">
 																{/* <Button
 																component="label"
 																variant="contained"
@@ -760,9 +769,9 @@ const UpdateBlog = () => {
 																		</Button>
 																	</div>
 																</div>
-															</Box>
-															<Box>
-																<FormGroup className="w-[55rem] pl-24 pt-8 pb-4">
+															</div>
+															<div className="w-[55rem] pl-24 pt-8 pb-4 max-md:w-[18rem] max-md:pl-0">
+																<FormGroup>
 																	<Form.Control
 																		as="textarea"
 																		rows={15}
@@ -772,7 +781,7 @@ const UpdateBlog = () => {
 																		onChange={handleChangeTextarea}
 																	/>
 																</FormGroup>
-															</Box>
+															</div>
 														</div>
 													</CardContent>
 												</Card>
@@ -780,7 +789,7 @@ const UpdateBlog = () => {
 										</div>
 									</div>
 
-									<div className="mt-8 mb-8 flex justify-center gap-x-14">
+									<div className="mt-8 mb-8 flex justify-center gap-x-14 max-md:flex-wrap-reverse max-md:gap-y-6">
 										<Box
 											sx={{ minWidth: 300 }}
 											className="flex justify-center items-center"

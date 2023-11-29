@@ -151,7 +151,7 @@ const History = () => {
 	return (
 		<>
 			<div className="container-xl flex justify-center">
-				<div className="mt-6 max-w-3xl">
+				<div className="mt-6 max-w-3xl max-md:w-full max-md:px-4">
 					<Accordion>
 						<AccordionSummary
 							expandIcon={<ExpandMoreIcon />}
@@ -162,7 +162,7 @@ const History = () => {
 						</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
-								<div className="px-6">
+								<div className="px-6 max-md:px-0">
 									<div>
 										<FormControl component="fieldset" variant="standard">
 											{/* <FormLabel component="legend">
@@ -170,9 +170,11 @@ const History = () => {
 																		</FormLabel> */}
 
 											<FormGroup>
-												<div className="flex pt-3 justify-start items-center align-middle pl-12">
-													<div className="pr-12">
-														<Typography>type</Typography>
+												<div className="flex pt-3 justify-start items-center align-middle pl-12 max-md:justify-center max-md:px-4">
+													<div className="pr-12 max-md:pr-6">
+														<Typography className="whitespace-nowrap">
+															type
+														</Typography>
 													</div>
 													<div>
 														<FormControl className="w-48">
@@ -198,9 +200,11 @@ const History = () => {
 														</FormControl>
 													</div>
 												</div>
-												<div className="flex pt-3 justify-start items-center align-middle pl-12">
-													<div className="pr-12">
-														<Typography>日付</Typography>
+												<div className="flex pt-3 justify-start items-center align-middle pl-12 max-md:px-4 max-md:justify-center">
+													<div className="pr-12 max-md:pr-6">
+														<Typography className="whitespace-nowrap">
+															日付
+														</Typography>
 													</div>
 													<div>
 														<input
@@ -212,11 +216,13 @@ const History = () => {
 														/>
 													</div>
 												</div>
-												<div className="flex pt-3 justify-start items-center align-middle pl-12 pb-8">
-													<div className="pr-12">
-														<Typography>内容</Typography>
+												<div className="flex pt-3 justify-start items-center align-middle pl-12 pb-8 max-md:justify-center max-md:px-4">
+													<div className="pr-12 max-md:pr-6">
+														<Typography className="whitespace-nowrap">
+															内容
+														</Typography>
 													</div>
-													<div>
+													<div className="max-md:mr-6">
 														<TextField
 															id="outlined-basic"
 															name="content"
@@ -245,7 +251,7 @@ const History = () => {
 				</div>
 			</div>
 			<div>
-				<div className="px-12 pt-16 max-w-4xl flex justify-center mx-auto">
+				<div className="px-12 pt-16 max-w-4xl flex justify-center mx-auto max-md:px-4">
 					<div style={{ height: "100%", width: "100%" }}>
 						<DataGrid
 							rows={rows}
