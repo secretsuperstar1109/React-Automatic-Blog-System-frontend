@@ -64,17 +64,17 @@ const Login = () => {
 			<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
 				<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 					<img
-						className="mx-auto w-8/12 h-8/12"
+						className="mx-auto w-8/12 h-8/12 max-md:w-6/12 max-md:h-6/12"
 						// src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
 						src="/logo/4.png"
 						alt="Your Company"
 					/>
-					<h2 className="mt-8 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+					<h2 className="mt-8 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 max-md:text-xl">
 						ログイン
 					</h2>
 				</div>
 
-				<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+				<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm max-md:px-4">
 					<form className="space-y-6" onSubmit={handleSubmit}>
 						<div>
 							<label

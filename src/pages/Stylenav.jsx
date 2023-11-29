@@ -72,9 +72,9 @@ const Stylenav = () => {
 				{ withCredentials: true }
 			);
 			const { status, username, user_salon_id, id } = data;
-			console.log("style-nav-username", username);
-			console.log("style-user_salon_id", user_salon_id);
-			console.log("style-id", id);
+			console.log("style-nav-username: ", username);
+			console.log("style-user_salon_id: ", user_salon_id);
+			console.log("style-id:", id);
 			if (status) {
 				dispatch(setUsername(username));
 				dispatch(setUserSalonId(user_salon_id));
@@ -91,7 +91,7 @@ const Stylenav = () => {
 		navigate("/");
 	};
 	const YourProfile = () => {
-		navigate("/your-profile");
+		navigate("/setting");
 	};
 
 	return (
@@ -185,7 +185,7 @@ const Stylenav = () => {
 																	onClick={YourProfile}
 																	className="block text-left w-full px-4 py-2 text-lg text-gray-700 active:bg-gray-300"
 																>
-																	Your Profile
+																	プロフィール
 																</button>
 															</Menu.Item>
 															{/* <Menu.Item>
@@ -201,7 +201,7 @@ const Stylenav = () => {
 																	onClick={Logout}
 																	className="block text-left w-full px-4 py-2 text-lg text-gray-700 active:bg-gray-300"
 																>
-																	Logout
+																	ログアウト
 																</button>
 															</Menu.Item>
 														</Menu.Items>
@@ -250,7 +250,7 @@ const Stylenav = () => {
 										))}
 									</div>
 									<div className="border-t border-gray-700 pb-3 pt-4">
-										<div className="flex items-center px-5">
+										<div className="flex items-center px-5 max-md:hidden">
 											<div className="flex-shrink-0">
 												<img
 													className="h-10 w-10 rounded-full"
@@ -287,16 +287,16 @@ const Stylenav = () => {
 												</Disclosure.Button>
 											))} */}
 											<Disclosure.Button
-												onClick={Logout}
+												onClick={YourProfile}
 												className="block text-left w-full rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white hover:no-underline"
 											>
-												Your Profile
+												プロフィール
 											</Disclosure.Button>
 											<Disclosure.Button
 												onClick={Logout}
 												className="block text-left w-full rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white hover:no-underline"
 											>
-												Logout
+												ログアウト
 											</Disclosure.Button>
 										</div>
 									</div>

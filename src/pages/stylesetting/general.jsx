@@ -148,7 +148,7 @@ const General = () => {
 					salon_password: "",
 					salon_confirm_password: "",
 					password: "",
-					confirm_password: ""
+					confirm_password: "",
 				});
 			})
 			.catch((err) => {
@@ -187,7 +187,7 @@ const General = () => {
 								</AppBar>
 								<Card className="flex justify-start w-full">
 									<CardContent className="rounded-tr-none w-full">
-										<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col">
+										<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col max-md:justify-center max-md:px-4">
 											<Box>
 												<FormControl component="fieldset" variant="standard">
 													{/* <FormLabel component="legend">
@@ -246,7 +246,7 @@ const General = () => {
 								</AppBar>
 								<Card className="flex justify-start w-full">
 									<CardContent className="rounded-tr-none w-full">
-										<div className="flex justify-start pl-20 pr-20 pb-3 pt-8 w-full flex-col">
+										<div className="flex justify-start pl-20 pr-20 pb-3 pt-8 w-full flex-col max-md:justify-center max-md:px-4">
 											<Box>
 												<div className="pb-2">
 													<Typography variant="h6">サロンボードID</Typography>
@@ -255,7 +255,7 @@ const General = () => {
 													<Typography variant="h6">{userSalonId}</Typography>
 												</div>
 											</Box>
-											<Box sx={{ minWidth: 300 }} className="pb-6 pt-6">
+											<Box sx={{ minWidth: 270 }} className="pb-6 pt-6">
 												<Typography className="pb-3">パスワード</Typography>
 												<FormControl className="w-full">
 													<TextField
@@ -268,7 +268,7 @@ const General = () => {
 													/>
 												</FormControl>
 											</Box>
-											<Box sx={{ minWidth: 300 }} className="pb-6 pt-6">
+											<Box sx={{ minWidth: 270 }} className="pb-6 pt-6">
 												<Typography className="pb-3">パスワード確認</Typography>
 												<FormControl className="w-full">
 													<TextField
@@ -313,7 +313,7 @@ const General = () => {
 								</AppBar>
 								<Card className="flex justify-start w-full">
 									<CardContent className="rounded-tr-none w-full">
-										<div className="flex justify-start pl-20 pr-20 pb-3 pt-8 w-full flex-col">
+										<div className="flex justify-start pl-20 pr-20 pb-3 pt-8 w-full flex-col max-md:justify-center max-md:px-4">
 											<Box>
 												<div className="pb-2">
 													<Typography variant="h6">ユーザ名</Typography>
@@ -322,7 +322,7 @@ const General = () => {
 													<Typography variant="h6">{username}</Typography>
 												</div>
 											</Box>
-											<Box sx={{ minWidth: 300 }} className="pb-6 pt-6">
+											<Box sx={{ minWidth: 270 }} className="pb-6 pt-6">
 												<Typography className="pb-3">
 													Style Tokyo user ID
 												</Typography>
@@ -337,7 +337,7 @@ const General = () => {
 													/>
 												</FormControl>
 											</Box>
-											<Box sx={{ minWidth: 300 }} className="pb-6 pt-6">
+											<Box sx={{ minWidth: 270 }} className="pb-6 pt-6">
 												<Typography className="pb-3">パスワード</Typography>
 												<FormControl className="w-full">
 													<TextField
@@ -350,7 +350,7 @@ const General = () => {
 													/>
 												</FormControl>
 											</Box>
-											<Box sx={{ minWidth: 300 }} className="pb-6 pt-6">
+											<Box sx={{ minWidth: 270 }} className="pb-6 pt-6">
 												<Typography className="pb-3">パスワード確認</Typography>
 												<FormControl className="w-full">
 													<TextField
