@@ -502,23 +502,23 @@ const UpdateStyle = () => {
 								<Tab eventKey="home" title="スタイル">
 									<div className="container-xl m-auto">
 										<form onSubmit={handleSubmit}>
-											<div className="flex flex-col justify-center items-center w-full">
+											{/* <div className="flex flex-col justify-center items-center w-full">
 												<Box
 													sx={{ flexGrow: 1 }}
 													className="w-full max-w-5xl pt-6 mx-auto"
 												>
 													<AppBar position="static" className="rounded-t-lg">
-														<Toolbar>
-															{/* <IconButton
+														<Toolbar> */}
+											{/* <IconButton
 															size="large"
 															edge="start"
 															color="inherit"
 															aria-label="menu"
 															sx={{ mr: 2 }}
 														> */}
-															{/* <MenuIcon className="mr-6" /> */}
-															{/* </IconButton> */}
-															<Typography
+											{/* <MenuIcon className="mr-6" /> */}
+											{/* </IconButton> */}
+											{/* <Typography
 																variant="h6"
 																component="div"
 																sx={{ flexGrow: 1 }}
@@ -526,9 +526,9 @@ const UpdateStyle = () => {
 																スタイルテンプレート
 															</Typography>
 															{/* <Button color="inherit">Login</Button> */}
-														</Toolbar>
-													</AppBar>
-													<Card className="flex justify-center w-full">
+											{/* </Toolbar>
+													</AppBar>  */}
+											{/* <Card className="flex justify-center w-full">
 														<CardContent className="rounded-tr-none">
 															<div className="flex justify-center items-center gap-x-16 pb-3 pt-4 max-md:block">
 																<Box className="w-[20rem] flex justify-center items-center max-md:mb-6 max-md:w-[15rem]">
@@ -562,7 +562,7 @@ const UpdateStyle = () => {
 														</CardContent>
 													</Card>
 												</Box>
-											</div>
+											</div> */}
 											{/* <div className="mt-24 flex justify-center gap-x-14">
 												<Box
 													sx={{ minWidth: 300 }}
@@ -798,11 +798,11 @@ const UpdateStyle = () => {
 														</Toolbar>
 													</AppBar>
 													<Card className="flex justify-center w-full">
-														<CardContent className="rounded-tr-none w-full">
-															<div className="flex justify-around items-center pb-3 pt-4 w-full max-md:block max-md:px-4 max-md:w-[18rem] max-md:mx-auto">
+														<CardContent className="rounded-tr-none w-full max-md:flex max-md:justify-center">
+															<div className="flex justify-around items-center pb-3 pt-4 w-full max-md:block max-md:mx-auto max-md:w-[17rem] max-md:flex-col max-md:px-8">
 																<Box
 																	sx={{ minWidth: 200 }}
-																	className="flex justify-between flex-col h-[24.5rem] max-md:mb-8"
+																	className="flex justify-between flex-col h-[24.5rem] max-md:mb-8 w-[13rem]"
 																>
 																	<div>
 																		<FormControl fullWidth>
@@ -832,7 +832,7 @@ const UpdateStyle = () => {
 																					: data.selectedImage1
 																			}
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																			className="w-40 h-40"
+																			className="w-auto h-40"
 																		/>
 																	</div>
 																	<div className="flex justify-center items-center">
@@ -853,7 +853,7 @@ const UpdateStyle = () => {
 																</Box>
 																<Box
 																	sx={{ minWidth: 200 }}
-																	className="flex justify-between flex-col h-[24.5rem] max-md:mb-8"
+																	className="flex justify-between flex-col h-[24.5rem] max-md:mb-8 w-[13rem]"
 																>
 																	<FormControl fullWidth>
 																		<InputLabel id="demo-simple-select-label">
@@ -892,7 +892,7 @@ const UpdateStyle = () => {
 																					: data.selectedImage2
 																			}
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																			className="w-40 h-40"
+																			className="w-auto h-40"
 																		/>
 																	</div>
 																	<div className="flex justify-center items-center">
@@ -913,7 +913,7 @@ const UpdateStyle = () => {
 																</Box>
 																<Box
 																	sx={{ minWidth: 200 }}
-																	className="flex justify-between flex-col h-[24.5rem]"
+																	className="flex justify-between flex-col h-[24.5rem] w-[13rem]"
 																>
 																	<FormControl fullWidth>
 																		<InputLabel id="demo-simple-select-label">
@@ -952,7 +952,7 @@ const UpdateStyle = () => {
 																					: data.selectedImage3
 																			}
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																			className="w-40 h-40"
+																			className="w-auto h-40"
 																		/>
 																	</div>
 																	<div className="flex justify-center items-center">

@@ -83,7 +83,7 @@ const AddStyle = () => {
 		selectedImage1: null,
 		selectedImage2: null,
 		selectedImage3: null,
-		front: "",
+		front: "Front",
 		front1: "",
 		front2: "",
 		stylist_name: "",
@@ -115,6 +115,23 @@ const AddStyle = () => {
 		menu_content: "",
 	});
 
+	const [errors, setErrors] = useState({
+		sync_start_time: "",
+		sync_interval: "",
+		selectedImage1: "",
+		style_name: "",
+		stylist_name: "",
+		stylist_comment: "",
+		sex: "",
+		length: "",
+		color: "",
+		style_image: "",
+		menu_content: "",
+		selectedImage1: "",
+	});
+
+	// console.log("front: ", data.front);
+
 	//switch
 
 	const updateStop = (e) => {
@@ -125,29 +142,35 @@ const AddStyle = () => {
 
 	const handleChangeTextarea = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	//sync_date
 	const handleChangeSyncDate = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	//sync_time
 	const handleChangeSyncTime = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	//select
 	const handleChangeSelect = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	const handleChangeRadio = (key) => (e) => {
 		setData((data) => ({ ...data, [key]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	const handleChangeCheckbox = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.checked }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	//select_post_mode
@@ -242,6 +265,7 @@ const AddStyle = () => {
 			...data,
 			[key]: file,
 		}));
+
 		setShow((data) => ({
 			...data,
 			[key]: URL.createObjectURL(file),
@@ -250,6 +274,12 @@ const AddStyle = () => {
 			...data,
 			[key]: true,
 		}));
+		if (key == "selectedImage1") {
+			setErrors((data) => ({
+				...data,
+				selectedImage1: "",
+			}));
+		}
 		// setData((data) => ({
 		// 	...data,
 		// 	[key]: e.target.files[0],
@@ -289,6 +319,59 @@ const AddStyle = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		const validationErrors = {};
+		if (!data.sync_start_time) {
+			validationErrors.sync_start_time = "この項目は必須です。";
+		}
+		if (!data.sync_interval) {
+			validationErrors.sync_interval = "この項目は必須です。";
+		}
+
+		if (!data.selectedImage1) {
+			validationErrors.selectedImage1 = "この項目は必須です。";
+		}
+
+		if (!data.style_name) {
+			validationErrors.style_name = "この項目は必須です。";
+		}
+
+		if (!data.stylist_comment) {
+			validationErrors.stylist_comment = "この項目は必須です。";
+		}
+		if (!data.stylist_name) {
+			validationErrors.stylist_name = "この項目は必須です。";
+		}
+		if (!data.sex) {
+			validationErrors.sex = "この項目は必須です。";
+		}
+
+		if (!data.length) {
+			validationErrors.length = "この項目は必須です。";
+		}
+
+		if (!data.color) {
+			validationErrors.color = "この項目は必須です。";
+		}
+
+		if (!data.menu_content) {
+			validationErrors.menu_content = "この項目は必須です。";
+		}
+
+		if (!data.style_image) {
+			validationErrors.style_image = "この項目は必須です。";
+		}
+
+		if (!data.selectedImage1) {
+			validationErrors.selectedImage1 = "この項目は必須です。";
+		}
+
+		console.log("validationErrors: ", validationErrors);
+		if (Object.keys(validationErrors).length > 0) {
+			setErrors(validationErrors);
+			return;
+		}
+
 		const formData = new FormData();
 		formData.append("update_stop", data.update_stop);
 		formData.append("internal_memo", data.internal_memo);
@@ -339,7 +422,7 @@ const AddStyle = () => {
 		formData.append("face_type_base", data.face_type_base);
 		formData.append("face_type_square", data.face_type_square);
 		formData.append("menu_content", data.menu_content);
-		// console.log("formData: ", formData);
+		console.log("formData: ", formData);
 
 		axios
 			.post("http://localhost:4000/api/style", formData)
@@ -425,31 +508,31 @@ const AddStyle = () => {
 								<Tab eventKey="home" title="スタイル">
 									<div className="container-xl m-auto">
 										<form onSubmit={handleSubmit}>
-											<div className="flex flex-col justify-center items-center w-full">
+											{/* <div className="flex flex-col justify-center items-center w-full">
 												<Box
 													sx={{ flexGrow: 1 }}
 													className="w-full max-w-5xl pt-6 mx-auto"
 												>
 													<AppBar position="static" className="rounded-t-lg">
-														<Toolbar>
-															{/* <IconButton
+														<Toolbar> */}
+											{/* <IconButton
 															size="large"
 															edge="start"
 															color="inherit"
 															aria-label="menu"
 															sx={{ mr: 2 }}
 														> */}
-															{/* <MenuIcon className="mr-6" /> */}
-															{/* </IconButton> */}
-															<Typography
+											{/* <MenuIcon className="mr-6" /> */}
+											{/* </IconButton> */}
+											{/* <Typography
 																variant="h6"
 																component="div"
 																sx={{ flexGrow: 1 }}
 															>
 																スタイルテンプレート
-															</Typography>
-															{/* <Button color="inherit">Login</Button> */}
-														</Toolbar>
+															</Typography> */}
+											{/* <Button color="inherit">Login</Button> */}
+											{/* </Toolbar>
 													</AppBar>
 													<Card className="flex justify-center w-full">
 														<CardContent className="rounded-tr-none">
@@ -485,7 +568,7 @@ const AddStyle = () => {
 														</CardContent>
 													</Card>
 												</Box>
-											</div>
+											</div> */}
 											{/* <div className="mt-24 flex justify-center gap-x-14">
 												<Box
 													sx={{ minWidth: 300 }}
@@ -594,7 +677,12 @@ const AddStyle = () => {
 																	</div>
 																</Box>
 																<Box>
-																	<div className="mt-3 mb-3">同期開始時間</div>
+																	<div className="mt-3 mb-3">
+																		同期開始時間
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
+																	</div>
 																	<div>
 																		<input
 																			type="time"
@@ -604,9 +692,19 @@ const AddStyle = () => {
 																			className=" block w-44 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
 																		/>
 																	</div>
+																	{errors.sync_start_time && (
+																		<span className="text-red-700 text-base">
+																			{errors.sync_start_time}
+																		</span>
+																	)}
 																</Box>
 																<Box>
-																	<div className="mt-3 mb-3">同期間隔</div>
+																	<div className="mt-3 mb-3">
+																		同期間隔
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
+																	</div>
 																	<div>
 																		<FormControl className="w-ull">
 																			<InputLabel
@@ -653,6 +751,11 @@ const AddStyle = () => {
 																					1週間
 																				</MenuItem>
 																			</Select>
+																			{errors.sync_interval && (
+																				<span className="text-red-700 text-base">
+																					{errors.sync_interval}
+																				</span>
+																			)}
 																		</FormControl>
 																	</div>
 																</Box>
@@ -716,16 +819,19 @@ const AddStyle = () => {
 																sx={{ flexGrow: 1 }}
 															>
 																スタイル画像
+																<span className="text-white-600 text-xs pl-2">
+																	*必須"
+																</span>
 															</Typography>
 															{/* <Button color="inherit">Login</Button> */}
 														</Toolbar>
 													</AppBar>
 													<Card className="flex justify-center w-full">
-														<CardContent className="rounded-tr-none w-full">
-															<div className="flex justify-around items-center pb-3 pt-4 w-full max-md:block">
+														<CardContent className="rounded-tr-none w-full max-md:flex max-md:justify-center">
+															<div className="flex justify-around items-center pb-3 pt-4 w-full max-md:block max-md:mx-auto max-md:w-[17rem] max-md:flex-col max-md:px-8">
 																<Box
 																	sx={{ minWidth: 200 }}
-																	className="flex justify-between flex-col h-[24.5rem] max-md:w-[17rem] max-md:mx-auto"
+																	className="flex justify-between flex-col h-[24.5rem] max-md:mb-8 w-[13rem]"
 																>
 																	<div>
 																		<FormControl fullWidth>
@@ -747,7 +853,7 @@ const AddStyle = () => {
 																		</FormControl>
 																	</div>
 
-																	<div className="flex justify-center items-center pt-5 pb-5">
+																	<div className="flex justify-center items-center pt-5 pb-5 flex-col">
 																		<img
 																			src={
 																				flag.selectedImage1
@@ -755,9 +861,15 @@ const AddStyle = () => {
 																					: data.selectedImage1
 																			}
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																			className="w-40 h-40"
+																			className="w-auto h-40"
 																		/>
+																		{errors.selectedImage1 && (
+																			<span className="text-red-700 text-base">
+																				{errors.selectedImage1}
+																			</span>
+																		)}
 																	</div>
+
 																	<div className="flex justify-center items-center">
 																		<Button
 																			component="label"
@@ -777,7 +889,7 @@ const AddStyle = () => {
 																</Box>
 																<Box
 																	sx={{ minWidth: 200 }}
-																	className="flex justify-between flex-col h-[24.5rem] max-md:w-[17rem] max-md:mx-auto max-md:mt-6"
+																	className="flex justify-between flex-col h-[24.5rem] max-md:mb-8 w-[13rem]"
 																>
 																	<FormControl fullWidth>
 																		<InputLabel id="demo-simple-select-label">
@@ -816,7 +928,7 @@ const AddStyle = () => {
 																					: data.selectedImage2
 																			}
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																			className="w-40 h-40"
+																			className="w-auto h-40"
 																		/>
 																	</div>
 																	<div className="flex justify-center items-center">
@@ -838,7 +950,7 @@ const AddStyle = () => {
 																</Box>
 																<Box
 																	sx={{ minWidth: 200 }}
-																	className="flex justify-between flex-col h-[24.5rem] max-md:w-[17rem] max-md:mx-auto max-md:mt-6"
+																	className="flex justify-between flex-col h-[24.5rem] w-[13rem]"
 																>
 																	<FormControl fullWidth>
 																		<InputLabel id="demo-simple-select-label">
@@ -877,7 +989,7 @@ const AddStyle = () => {
 																					: data.selectedImage3
 																			}
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																			className="w-40 h-40"
+																			className="w-auto h-40"
 																		/>
 																	</div>
 																	<div className="flex justify-center items-center">
@@ -924,6 +1036,9 @@ const AddStyle = () => {
 																sx={{ flexGrow: 1 }}
 															>
 																スタイリストコメント
+																<span className="text-white-600 text-xs pl-2">
+																	*必須"
+																</span>
 															</Typography>
 															{/* <Button color="inherit">Login</Button> */}
 														</Toolbar>
@@ -960,6 +1075,11 @@ const AddStyle = () => {
 																			</MenuItem>
 																		</Select>
 																	</FormControl>
+																	{errors.stylist_name && (
+																		<span className="text-red-700 text-base">
+																			{errors.stylist_name}
+																		</span>
+																	)}
 																</Box>
 																<Box>
 																	<div className="mb-2 mt-1">
@@ -974,6 +1094,11 @@ const AddStyle = () => {
 																			onChange={handleChangeTextarea}
 																			value={data.stylist_comment}
 																		/>
+																		{errors.stylist_comment && (
+																			<span className="text-red-700 text-base">
+																				{errors.stylist_comment}
+																			</span>
+																		)}
 																	</FormGroup>
 																</Box>
 															</div>
@@ -1016,6 +1141,9 @@ const AddStyle = () => {
 																>
 																	<Typography className="pb-3">
 																		スタイル名 0/30文字
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormControl className="w-full">
 																		<TextField
@@ -1027,6 +1155,11 @@ const AddStyle = () => {
 																			value={data.style_name}
 																		/>
 																	</FormControl>
+																	{errors.style_name && (
+																		<span className="text-red-700 text-base">
+																			{errors.style_name}
+																		</span>
+																	)}
 																</Box>
 																<Box sx={{ minWidth: 300 }} className="pb-3">
 																	{/* <Typography className="pb-3">
@@ -1035,6 +1168,9 @@ const AddStyle = () => {
 																	<FormControl>
 																		<FormLabel id="demo-radio-buttons-group-label">
 																			カテゴリ
+																			<span className="text-red-600 text-xs pl-2">
+																				*必須"
+																			</span>
 																		</FormLabel>
 																		<RadioGroup
 																			aria-labelledby="demo-radio-buttons-group-label"
@@ -1054,13 +1190,23 @@ const AddStyle = () => {
 																				label="メンズ"
 																			/>
 																		</RadioGroup>
+																		{errors.sex && (
+																			<span className="text-red-700 text-base">
+																				{errors.sex}
+																			</span>
+																		)}
 																	</FormControl>
 																</Box>
 																<Box
 																	sx={{ minWidth: 300 }}
 																	className="pb-6 max-md:w-[17rem]"
 																>
-																	<Typography className="pb-3">長さ</Typography>
+																	<Typography className="pb-3">
+																		長さ
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
+																	</Typography>
 																	<FormControl className="w-full">
 																		<InputLabel id="demo-simple-select-label">
 																			選択してください
@@ -1096,6 +1242,11 @@ const AddStyle = () => {
 																			</MenuItem>
 																		</Select>
 																	</FormControl>
+																	{errors.length && (
+																		<span className="text-red-700 text-base">
+																			{errors.length}
+																		</span>
+																	)}
 																</Box>
 																<Box
 																	sx={{ minWidth: 300 }}
@@ -1103,6 +1254,9 @@ const AddStyle = () => {
 																>
 																	<Typography className="pb-3">
 																		カラー
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormControl className="w-full">
 																		<InputLabel id="demo-simple-select-label">
@@ -1133,6 +1287,11 @@ const AddStyle = () => {
 																			</MenuItem>
 																		</Select>
 																	</FormControl>
+																	{errors.color && (
+																		<span className="text-red-700 text-base">
+																			{errors.color}
+																		</span>
+																	)}
 																</Box>
 																<Box
 																	sx={{ minWidth: 300 }}
@@ -1140,6 +1299,9 @@ const AddStyle = () => {
 																>
 																	<Typography className="pb-3">
 																		イメージ
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormControl className="w-full">
 																		<InputLabel id="demo-simple-select-label">
@@ -1175,10 +1337,18 @@ const AddStyle = () => {
 																			</MenuItem>
 																		</Select>
 																	</FormControl>
+																	{errors.style_name && (
+																		<span className="text-red-700 text-base">
+																			{errors.style_image}
+																		</span>
+																	)}
 																</Box>
 																<Box sx={{ minWidth: 300 }} className="pb-6">
 																	<Typography className="pb-3">
 																		メニュー内容0/50文字
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormGroup>
 																		<FormControlLabel
@@ -1461,6 +1631,7 @@ const AddStyle = () => {
 																sx={{ flexGrow: 1 }}
 															>
 																おすすめタイプ
+																<span className="text-xs pl-2">*必須"</span>
 															</Typography>
 															{/* <Button color="inherit">Login</Button> */}
 														</Toolbar>

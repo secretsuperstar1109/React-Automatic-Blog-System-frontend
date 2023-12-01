@@ -12,6 +12,7 @@ import Review from "./pages/review/review";
 import SyncHistory from "./pages/synchistory/synchistory";
 import UpdateStyle from "./pages/style/UpdateStyle";
 import UpdateBlog from "./pages/blog/updateBlog";
+import Admin from "./pages/admin/admin";
 
 function App() {
 	return (
@@ -31,6 +32,7 @@ function App() {
 					<Route path="/sync-history" element={<SyncHistory />} />
 					<Route path="/update-style" element={<UpdateStyle />} />
 					<Route path="/update-blog" element={<UpdateBlog />} />
+					<Route path="/admin" element={<Admin />} />
 					<Route path="*" element={<Error />} />
 				</Routes>
 			</BrowserRouter>

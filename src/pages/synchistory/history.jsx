@@ -163,7 +163,7 @@ const History = () => {
 						<AccordionDetails>
 							<Typography>
 								<div className="px-6 max-md:px-0">
-									<div>
+									<div className="max-md:flex max-md:justify-center">
 										<FormControl component="fieldset" variant="standard">
 											{/* <FormLabel component="legend">
 																			Assign responsibility

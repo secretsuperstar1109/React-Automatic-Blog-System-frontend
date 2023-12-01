@@ -51,6 +51,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 //checkbox
 import Checkbox from "@mui/material/Checkbox";
+import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 
 const VisuallyHiddenInput = styled("input")({
 	clip: "rect(0 0 0 0)",
@@ -76,6 +77,13 @@ const AddBlog = () => {
 		coupon: "",
 		signature: "",
 		uploadImage: null,
+		post_text: "",
+	});
+	const [errors, setErrors] = useState({
+		post_date: "",
+		contributor: "",
+		category: "",
+		title_character: "",
 		post_text: "",
 	});
 
@@ -119,6 +127,32 @@ const AddBlog = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		const validationErrors = {};
+		if (!data.post_date) {
+			validationErrors.post_date = "この項目は必須です。";
+		}
+		if (!data.contributor) {
+			validationErrors.contributor = "この項目は必須です。";
+		}
+
+		if (!data.category) {
+			validationErrors.category = "この項目は必須です。";
+		}
+
+		if (!data.title_character) {
+			validationErrors.title_character = "この項目は必須です。";
+		}
+
+		if (!data.post_text) {
+			validationErrors.post_text = "この項目は必須です。";
+		}
+		console.log("validationErrors: ", validationErrors);
+		if (Object.keys(validationErrors).length > 0) {
+			setErrors(validationErrors);
+			return;
+		}
+
 		const formData = new FormData();
 		formData.append("post_date", data.post_date);
 		formData.append("contributor", data.contributor);
@@ -128,7 +162,7 @@ const AddBlog = () => {
 		formData.append("signature", data.signature);
 		formData.append("uploadImage", data.uploadImage);
 		formData.append("post_text", data.post_text);
-		console.log("formData: ", formData);
+		// console.log("formData: ", formData);
 
 		axios
 			.post("http://localhost:4000/api/blog", formData)
@@ -140,10 +174,11 @@ const AddBlog = () => {
 					title_character: "",
 					coupon: "",
 					signature: "",
-					uploadImage: "",
+					uploadImage: null,
 					post_text: "",
 				});
-				setShow("");
+				setShow(null);
+				setFlag(false);
 				console.log(res.data.message);
 			})
 			.catch((err) => {
@@ -165,24 +200,27 @@ const AddBlog = () => {
 		jason: false,
 		antoine: true,
 	});
-	console.log("flag: ", flag);
-	console.log("show:", show);
-	console.log("uploadImage:", data.uploadImage);
+	// console.log("flag: ", flag);
+	// console.log("show:", show);
+	// console.log("uploadImage:", data.uploadImage);
 
 	//textarea
 
 	const handleChangeTextarea = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	//sync_date
 	const handleChangeSyncDate = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	//select
 	const handleChangeSelect = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	const [age, setAge] = useState("");
@@ -340,7 +378,12 @@ const AddBlog = () => {
 													<CardContent className="rounded-tr-none">
 														<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col max-md:px-0 max-md:justify-center">
 															<Box>
-																<div className="mt-3 mb-3">投稿日時</div>
+																<div className="mt-3 mb-3">
+																	投稿日時{" "}
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
+																</div>
 																<div className="flex flex-row pb-2">
 																	<input
 																		type="date"
@@ -350,9 +393,19 @@ const AddBlog = () => {
 																		className="block mr-6 w-44 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
 																	/>
 																</div>
+																{errors.post_date && (
+																	<span className="text-red-700 text-base">
+																		{errors.post_date}
+																	</span>
+																)}
 															</Box>
 															<Box>
-																<div className="mt-3 mb-3">投稿者</div>
+																<div className="mt-3 mb-3">
+																	投稿者
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
+																</div>
 																<div>
 																	<FormControl className="w-ull">
 																		<InputLabel
@@ -384,10 +437,20 @@ const AddBlog = () => {
 																		</Select>
 																	</FormControl>
 																</div>
+																{errors.contributor && (
+																	<span className="text-red-700 text-base">
+																		{errors.contributor}
+																	</span>
+																)}
 															</Box>
 
 															<Box>
-																<div className="mt-3 mb-3">カテゴリ</div>
+																<div className="mt-3 mb-3">
+																	カテゴリ
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
+																</div>
 																<div>
 																	<FormControl className="w-ull">
 																		<InputLabel
@@ -417,10 +480,18 @@ const AddBlog = () => {
 																		</Select>
 																	</FormControl>
 																</div>
+																{errors.category && (
+																	<span className="text-red-700 text-base">
+																		{errors.category}
+																	</span>
+																)}
 															</Box>
 															<Box sx={{ minWidth: 300 }} className="pb-6 pt-4">
 																<Typography className="pb-3">
 																	タイトル ※25文字
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
 																</Typography>
 																<FormControl className="w-full">
 																	<TextField
@@ -432,6 +503,11 @@ const AddBlog = () => {
 																		name="title_character"
 																	/>
 																</FormControl>
+																{errors.title_character && (
+																	<span className="text-red-700 text-base">
+																		{errors.title_character}
+																	</span>
+																)}
 															</Box>
 															<Box sx={{ minWidth: 300 }} className="pb-6">
 																<Typography className="pb-3">
@@ -701,6 +777,9 @@ const AddBlog = () => {
 															sx={{ flexGrow: 1 }}
 														>
 															本文
+															<span className="text-white-600 text-xs pl-2">
+																*必須"
+															</span>
 														</Typography>
 														{/* <Button color="inherit">Login</Button> */}
 													</Toolbar>
@@ -723,7 +802,7 @@ const AddBlog = () => {
 																		<img
 																			src={flag ? show : data.uploadImage}
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																			className="w-40 h-40"
+																			className="w-auto h-40"
 																		/>
 																	</div>
 																	<div className="flex justify-center items-center">
@@ -755,6 +834,11 @@ const AddBlog = () => {
 																		onChange={handleChangeTextarea}
 																	/>
 																</FormGroup>
+																{errors.post_text && (
+																	<span className="text-red-700 text-base pl-24 max-md:pl-4">
+																		{errors.post_text}
+																	</span>
+																)}
 															</div>
 														</div>
 													</CardContent>

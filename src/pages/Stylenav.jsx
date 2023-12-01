@@ -14,20 +14,23 @@ import {
 	setId,
 } from "../store/actions/setUserDetails";
 
-const user = {
-	name: "Tom Cook",
-	email: "tom@example.com",
-	imageUrl:
-		"https://w7.pngwing.com/pngs/8/232/png-transparent-computer-icons-man-avatar-male-login-man-people-monochrome-black-thumbnail.png",
-};
-const navigation = [
+// const user = {
+// 	name: "Tom Cook",
+// 	email: "tom@example.com",
+// 	imageUrl:
+// 		"https://w7.pngwing.com/pngs/8/232/png-transparent-computer-icons-man-avatar-male-login-man-people-monochrome-black-thumbnail.png",
+// };
+let navigation = [
 	{ name: "スタイル", href: "/home", current: false },
 	{ name: "ブログ", href: "/blog", current: false },
-	{ name: "口コミ", href: "/review", current: false },
+	// { name: "口コミ", href: "/review", current: false },
 	{ name: "同期履歴", href: "sync-history", current: false },
 	{ name: "設定", href: "/setting", current: false },
 	{ name: "お知らせ", href: "/notice", current: false },
 ];
+
+let adminAdded = false;
+
 const userNavigation = [
 	{ name: "Your Profile", href: "/profile" },
 	{ name: "Logout", href: "/logout" },
@@ -47,6 +50,13 @@ const Stylenav = () => {
 	const dispatch = useDispatch();
 
 	const [key, setKey] = useState("home");
+
+	const [user, setUser] = useState({
+		name: "",
+		email: "",
+		imageUrl:
+			"https://w7.pngwing.com/pngs/8/232/png-transparent-computer-icons-man-avatar-male-login-man-people-monochrome-black-thumbnail.png",
+	});
 
 	//switch
 	const [state, setState] = useState({
@@ -71,17 +81,32 @@ const Stylenav = () => {
 				{},
 				{ withCredentials: true }
 			);
-			const { status, username, user_salon_id, id } = data;
+
+			const { status, username, user_salon_id, id, permission } = data;
 			console.log("style-nav-username: ", username);
 			console.log("style-user_salon_id: ", user_salon_id);
 			console.log("style-id:", id);
+			if (permission == "manager" && !adminAdded) {
+				navigation.push({
+					name: "管理者ページ",
+					href: "/admin",
+					current: false,
+				});
+				adminAdded = true;
+			}
+
 			if (status) {
 				dispatch(setUsername(username));
 				dispatch(setUserSalonId(user_salon_id));
 				dispatch(setId(id));
 			}
 			return status
-				? setVerifyname(username)
+				? (setVerifyname(username),
+				  setUser((data) => ({
+						...data,
+						name: username,
+						email: user_salon_id,
+				  })))
 				: (removeCookie("token"), navigate("/"));
 		};
 		verifyCookie();
@@ -93,6 +118,8 @@ const Stylenav = () => {
 	const YourProfile = () => {
 		navigate("/setting");
 	};
+	console.log("user.name: ", user.name);
+	console.log("user.email: ", user.email);
 
 	return (
 		<>
@@ -250,7 +277,7 @@ const Stylenav = () => {
 										))}
 									</div>
 									<div className="border-t border-gray-700 pb-3 pt-4">
-										<div className="flex items-center px-5 max-md:hidden">
+										<div className="flex items-center px-4 ">
 											<div className="flex-shrink-0">
 												<img
 													className="h-10 w-10 rounded-full"
@@ -266,14 +293,14 @@ const Stylenav = () => {
 													{user.email}
 												</div>
 											</div>
-											<button
+											{/* <button
 												type="button"
 												className="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
 											>
 												<span className="absolute -inset-1.5" />
 												<span className="sr-only">View notifications</span>
 												<BellIcon className="h-6 w-6" aria-hidden="true" />
-											</button>
+											</button> */}
 										</div>
 										<div className="mt-3 space-y-1 px-2">
 											{/* {userNavigation.map((item) => (
@@ -311,4 +338,3 @@ const Stylenav = () => {
 };
 
 export default Stylenav;
-
