@@ -13,6 +13,7 @@ import SyncHistory from "./pages/synchistory/synchistory";
 import UpdateStyle from "./pages/style/UpdateStyle";
 import UpdateBlog from "./pages/blog/updateBlog";
 import Admin from "./pages/admin/admin";
+import UpdateAdmin from "./pages/admin/updateAdmin";
 
 function App() {
 	return (
@@ -33,6 +34,7 @@ function App() {
 					<Route path="/update-style" element={<UpdateStyle />} />
 					<Route path="/update-blog" element={<UpdateBlog />} />
 					<Route path="/admin" element={<Admin />} />
+					<Route path="/update-admin" element={<UpdateAdmin />} />
 					<Route path="*" element={<Error />} />
 				</Routes>
 			</BrowserRouter>

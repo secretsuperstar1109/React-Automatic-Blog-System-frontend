@@ -78,30 +78,45 @@ const Admin = () => {
 			headerName: "電子メール",
 			type: "text",
 			width: 250,
+			renderCell: (params) => (
+				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
+			),
 		},
 		{
 			field: "username",
 			headerName: "ユーザー名",
 			type: "text",
 			width: 200,
+			renderCell: (params) => (
+				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
+			),
 		},
 		{
 			field: "style_tokyo_id",
 			headerName: "Style-Tokyo-Id",
 			type: "text",
 			width: 200,
+			renderCell: (params) => (
+				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
+			),
 		},
 		{
 			field: "salon_id",
 			headerName: "Salon-Id",
 			type: "text",
 			width: 200,
+			renderCell: (params) => (
+				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
+			),
 		},
 		{
 			field: "permission",
 			headerName: "権限",
 			type: "text",
 			width: 150,
+			renderCell: (params) => (
+				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
+			),
 		},
 	];
 
@@ -112,6 +127,7 @@ const Admin = () => {
 		style_tokyo_id: item.style_tokyo_id,
 		salon_id: item.salon_id,
 		permission: item.permission,
+		_id: item._id,
 	}));
 
 	return (
