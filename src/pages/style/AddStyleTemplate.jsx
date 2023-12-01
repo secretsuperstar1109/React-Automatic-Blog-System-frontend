@@ -64,6 +64,13 @@ const AddStyleTemplate = () => {
 		jason: false,
 		antoine: true,
 	});
+
+	const [data, setData] = useState({
+		selectedImage1: null,
+		selectedImage2: null,
+		selectedImage3: null,
+	});
+
 	const [age, setAge] = useState("");
 
 	const handleChange = (event) => {
@@ -114,13 +121,13 @@ const AddStyleTemplate = () => {
 					<Stylenav />
 					<header className="bg-white shadow">
 						<div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
-							<h1 className="text-3xl font-bold tracking-tight text-gray-900">
+							<h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
 								スタイル
 							</h1>
 						</div>
 					</header>
 					<main>
-						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem]">
+						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
 							<Tabs
 								id="controlled-tab-example"
 								activeKey={key}
@@ -132,7 +139,7 @@ const AddStyleTemplate = () => {
 								</Tab>
 								<Tab eventKey="home" title="スタイル">
 									<div className="container-xl m-auto">
-										<div className="mt-24 flex justify-center gap-x-14">
+										<div className="mt-24 flex justify-center gap-x-14 flex-wrap max-md:gap-y-6">
 											<Box
 												sx={{ minWidth: 300 }}
 												className="flex justify-center items-center"
@@ -181,8 +188,8 @@ const AddStyleTemplate = () => {
 												</AppBar>
 												<Card className="flex justify-start w-full">
 													<CardContent className="rounded-tr-none">
-														<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col">
-															<Box sx={{ minWidth: 300 }} className="pb-6">
+														<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col max-md:justify-center max-md:px-0">
+															<Box sx={{ minWidth: 250 }} className="pb-6">
 																<Typography className="pb-3">
 																	テンプレート名
 																</Typography>
@@ -220,7 +227,7 @@ const AddStyleTemplate = () => {
 															</Box>
 															<Box>
 																<div className="mb-2 mt-1">内部メモ</div>
-																<FormGroup className="w-[40rem]">
+																<FormGroup className="w-[40rem] max-md:w-full">
 																	<Form.Control
 																		as="textarea"
 																		rows={3}
@@ -230,7 +237,7 @@ const AddStyleTemplate = () => {
 															</Box>
 															<Box>
 																<div className="mt-3 mb-3">同期期間</div>
-																<div className="flex flex-row pb-2">
+																<div className="flex flex-row pb-2 flex-wrap max-md:gap-y-4">
 																	<input
 																		type="date"
 																		className="block mr-6 w-44 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
@@ -347,7 +354,7 @@ const AddStyleTemplate = () => {
 												</AppBar>
 												<Card className="flex justify-center w-full">
 													<CardContent className="rounded-tr-none">
-														<div className="flex justify-center items-center gap-x-32 pb-3 pt-4">
+														<div className="flex justify-center items-center gap-x-32 pb-3 pt-4 max-lg:flex-col max-lg:gap-y-6">
 															<Box sx={{ minWidth: 200 }}>
 																<FormControl fullWidth>
 																	<InputLabel id="demo-simple-select-label">
@@ -365,9 +372,8 @@ const AddStyleTemplate = () => {
 																</FormControl>
 																<div className="flex justify-center items-center pt-5 pb-5">
 																	<img
-																		src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																		width={200}
-																		height={200}
+																		src={data.selectedImage1}
+																		className="w-40 h-40"
 																	/>
 																</div>
 																<div className="flex justify-center items-center">
@@ -404,9 +410,8 @@ const AddStyleTemplate = () => {
 																</FormControl>
 																<div className="flex justify-center items-center pt-5 pb-5">
 																	<img
-																		src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																		width={200}
-																		height={200}
+																		src={data.selectedImage2}
+																		className="w-40 h-40"
 																	/>
 																</div>
 																<div className="flex justify-center items-center">
@@ -443,9 +448,8 @@ const AddStyleTemplate = () => {
 																</FormControl>
 																<div className="flex justify-center items-center pt-5 pb-5">
 																	<img
-																		src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																		width={200}
-																		height={200}
+																		src={data.selectedImage3}
+																		className="w-40 h-40"
 																	/>
 																</div>
 																<div className="flex justify-center items-center">
@@ -490,7 +494,7 @@ const AddStyleTemplate = () => {
 														{/* <Button color="inherit">Login</Button> */}
 													</Toolbar>
 												</AppBar>
-												<Card className="flex justify-start pl-12 w-full">
+												<Card className="flex justify-start pl-12 w-full max-md:justify-center max-md:px-4">
 													<CardContent className="rounded-tr-none">
 														<div className="gap-x-16 pb-3 pt-4">
 															<Box sx={{ minWidth: 300 }} className="pb-6">
@@ -520,7 +524,7 @@ const AddStyleTemplate = () => {
 																<div className="mb-2 mt-1">
 																	コメント 0/120文字
 																</div>
-																<FormGroup className="w-[40rem]">
+																<FormGroup className="w-[40rem] max-md:w-full">
 																	<Form.Control
 																		as="textarea"
 																		rows={3}
@@ -559,7 +563,7 @@ const AddStyleTemplate = () => {
 														{/* <Button color="inherit">Login</Button> */}
 													</Toolbar>
 												</AppBar>
-												<Card className="flex justify-start pl-12 w-full">
+												<Card className="flex justify-start pl-12 w-full max-md:justify-center max-md:px-4">
 													<CardContent className="rounded-tr-none">
 														<div className="gap-x-16 pb-3 pt-4">
 															<Box sx={{ minWidth: 300 }} className="pb-6">
@@ -707,7 +711,7 @@ const AddStyleTemplate = () => {
 																</FormGroup>
 															</Box>
 															<Box>
-																<FormGroup className="w-[40rem]">
+																<FormGroup className="w-[40rem] max-md:w-full">
 																	<Form.Control
 																		as="textarea"
 																		rows={3}
@@ -913,9 +917,9 @@ const AddStyleTemplate = () => {
 														{/* <Button color="inherit">Login</Button> */}
 													</Toolbar>
 												</AppBar>
-												<Card className="flex justify-start pl-12 w-full">
+												<Card className="flex justify-start pl-12 w-full max-md:justify-center max-md:px-0">
 													<CardContent className="rounded-tr-none">
-														<div className="gap-x-16 pb-3 pt-4">
+														<div className="gap-x-16 pb-3 pt-4 flex-wrap">
 															<Box>
 																<div>
 																	<div className="pl-2 pt-4 pb-2">
@@ -926,7 +930,7 @@ const AddStyleTemplate = () => {
 																			髪量
 																		</Typography>
 																	</div>
-																	<div className="flex gap-x-12">
+																	<div className="flex gap-x-12 flex-wrap">
 																		<div className="flex justify-center items-center">
 																			<Checkbox
 																				checked={checked}
@@ -970,7 +974,7 @@ const AddStyleTemplate = () => {
 																			髪質
 																		</Typography>
 																	</div>
-																	<div className="flex">
+																	<div className="flex flex-wrap">
 																		<div className="flex justify-center items-center pr-8">
 																			<Checkbox
 																				checked={checked}
@@ -1014,7 +1018,7 @@ const AddStyleTemplate = () => {
 																			太さ
 																		</Typography>
 																	</div>
-																	<div className="flex gap-x-12">
+																	<div className="flex gap-x-12 flex-wrap">
 																		<div className="flex justify-center items-center">
 																			<Checkbox
 																				checked={checked}
@@ -1056,7 +1060,7 @@ const AddStyleTemplate = () => {
 																			クセ
 																		</Typography>
 																	</div>
-																	<div className="flex gap-x-12">
+																	<div className="flex gap-x-12 flex-wrap">
 																		<div className="flex justify-center items-center">
 																			<Checkbox
 																				checked={checked}
@@ -1098,7 +1102,7 @@ const AddStyleTemplate = () => {
 																			顔型
 																		</Typography>
 																	</div>
-																	<div className="flex gap-x-12">
+																	<div className="flex gap-x-12 flex-wrap">
 																		<div className="flex justify-center items-center">
 																			<Checkbox
 																				checked={checked}
@@ -1187,14 +1191,14 @@ const AddStyleTemplate = () => {
 														{/* <Button color="inherit">Login</Button> */}
 													</Toolbar>
 												</AppBar>
-												<Card className="flex justify-start pl-12 w-full">
+												<Card className="flex justify-start pl-12 w-full max-md:justify-center max-md:px-4">
 													<CardContent className="rounded-tr-none">
 														<div className="gap-x-16 pb-3 pt-4">
-															<Box>
+															<Box minWidth={300}>
 																<div className="mb-2 mt-1">
 																	ポイント 0/120文字
 																</div>
-																<FormGroup className="w-[40rem]">
+																<FormGroup className="w-[40rem] max-md:w-full">
 																	<Form.Control
 																		as="textarea"
 																		rows={3}
@@ -1209,7 +1213,10 @@ const AddStyleTemplate = () => {
 										</div>
 										<div className="flex justify-center mt-6 mb-24">
 											<Box>
-												<Button variant="contained" className="w-96 py-2">
+												<Button
+													variant="contained"
+													className="w-96 py-2 max-md:w-[15rem]"
+												>
 													追加
 												</Button>
 											</Box>

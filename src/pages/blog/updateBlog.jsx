@@ -85,6 +85,14 @@ const UpdateBlog = () => {
 		post_text: "",
 	});
 
+	const [errors, setErrors] = useState({
+		post_date: "",
+		contributor: "",
+		category: "",
+		title_character: "",
+		post_text: "",
+	});
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -108,7 +116,7 @@ const UpdateBlog = () => {
 		};
 		fetchData();
 	}, [id]);
-	console.log(data);
+	// console.log(data);
 
 	//ImageUpload
 	const VisuallyHiddenInput = styled("input")({
@@ -148,11 +156,36 @@ const UpdateBlog = () => {
 		setShow(URL.createObjectURL(e.target.files[0]));
 		setFlag(false);
 	};
-	console.log("show:", show);
+	// console.log("show:", show);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const formData = new FormData();
+
+		const validationErrors = {};
+		if (!data.post_date) {
+			validationErrors.post_date = "この項目は必須です。";
+		}
+		if (!data.contributor) {
+			validationErrors.contributor = "この項目は必須です。";
+		}
+
+		if (!data.category) {
+			validationErrors.category = "この項目は必須です。";
+		}
+
+		if (!data.title_character) {
+			validationErrors.title_character = "この項目は必須です。";
+		}
+
+		if (!data.post_text) {
+			validationErrors.post_text = "この項目は必須です。";
+		}
+		if (Object.keys(validationErrors).length > 0) {
+			setErrors(validationErrors);
+			return;
+		}
+
 		formData.append("post_date", data.post_date);
 		formData.append("contributor", data.contributor);
 		formData.append("category", data.category);
@@ -161,6 +194,9 @@ const UpdateBlog = () => {
 		formData.append("signature", data.signature);
 		formData.append("uploadImage", data.uploadImage);
 		formData.append("post_text", data.post_text);
+		console.log("data.uplodaImage: ", data.uploadImage);
+		console.log("formData: ", formData);
+		console.log("show: ", show);
 		axios
 			.put(`http://localhost:4000/api/blog/${id}`, formData)
 			.then((res) => {
@@ -177,7 +213,7 @@ const UpdateBlog = () => {
 				console.log(res.data.message);
 			})
 			.catch((err) => {
-				console.log("Error couldn't update Style");
+				console.log("Error couldn't update blog");
 				console.log(err.message);
 			});
 	};
@@ -207,16 +243,19 @@ const UpdateBlog = () => {
 
 	const handleChangeTextarea = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	//sync_date
 	const handleChangeSyncDate = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	//select
 	const handleChangeSelect = (e) => {
 		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+		setErrors((data) => ({ ...data, [e.target.name]: "" }));
 	};
 
 	return (
@@ -357,7 +396,12 @@ const UpdateBlog = () => {
 													<CardContent className="rounded-tr-none">
 														<div className="flex justify-start pl-20 pb-3 pt-3 w-full flex-col max-md:px-0 max-md:justify-center">
 															<Box>
-																<div className="mt-3 mb-3">投稿日時</div>
+																<div className="mt-3 mb-3">
+																	投稿日時
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
+																</div>
 																<div className="flex flex-row pb-2">
 																	<input
 																		type="date"
@@ -367,9 +411,19 @@ const UpdateBlog = () => {
 																		className="block mr-6 w-44 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
 																	/>
 																</div>
+																{errors.post_date && (
+																	<span className="text-red-700 text-base">
+																		{errors.post_date}
+																	</span>
+																)}
 															</Box>
 															<Box>
-																<div className="mt-3 mb-3">投稿者</div>
+																<div className="mt-3 mb-3">
+																	投稿者
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
+																</div>
 																<div>
 																	<FormControl className="w-ull">
 																		<InputLabel
@@ -401,10 +455,20 @@ const UpdateBlog = () => {
 																		</Select>
 																	</FormControl>
 																</div>
+																{errors.contributor && (
+																	<span className="text-red-700 text-base">
+																		{errors.contributor}
+																	</span>
+																)}
 															</Box>
 
 															<Box>
-																<div className="mt-3 mb-3">カテゴリ</div>
+																<div className="mt-3 mb-3">
+																	カテゴリ
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
+																</div>
 																<div>
 																	<FormControl className="w-ull">
 																		<InputLabel
@@ -434,6 +498,11 @@ const UpdateBlog = () => {
 																		</Select>
 																	</FormControl>
 																</div>
+																{errors.category && (
+																	<span className="text-red-700 text-base">
+																		{errors.category}
+																	</span>
+																)}
 															</Box>
 															<Box
 																sx={{ minWidth: 300 }}
@@ -441,6 +510,9 @@ const UpdateBlog = () => {
 															>
 																<Typography className="pb-3">
 																	タイトル ※25文字
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
 																</Typography>
 																<FormControl className="w-full">
 																	<TextField
@@ -452,6 +524,11 @@ const UpdateBlog = () => {
 																		name="title_character"
 																	/>
 																</FormControl>
+																{errors.title_character && (
+																	<span className="text-red-700 text-base">
+																		{errors.title_character}
+																	</span>
+																)}
 															</Box>
 															<Box
 																sx={{ minWidth: 300 }}
@@ -727,6 +804,9 @@ const UpdateBlog = () => {
 															sx={{ flexGrow: 1 }}
 														>
 															本文
+															<span className="text-white-600 text-xs pl-2">
+																*必須"
+															</span>
 														</Typography>
 														{/* <Button color="inherit">Login</Button> */}
 													</Toolbar>
@@ -749,7 +829,7 @@ const UpdateBlog = () => {
 																		<img
 																			src={flag ? data.uploadImage : show}
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
-																			className="w-40 h-40"
+																			className="w-auto h-40"
 																		/>
 																	</div>
 																	<div className="flex justify-center items-center">
@@ -781,6 +861,11 @@ const UpdateBlog = () => {
 																		onChange={handleChangeTextarea}
 																	/>
 																</FormGroup>
+																{errors.post_text && (
+																	<span className="text-red-700 text-base">
+																		{errors.post_text}
+																	</span>
+																)}
 															</div>
 														</div>
 													</CardContent>
