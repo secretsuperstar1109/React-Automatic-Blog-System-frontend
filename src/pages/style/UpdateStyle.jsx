@@ -52,12 +52,14 @@ import RadioGroup from "@mui/material/RadioGroup";
 //checkbox
 import Checkbox from "@mui/material/Checkbox";
 import StyleTemplate from "./StyleTemplate";
+import { useSelector } from "react-redux";
 //checkbox-select
 
 const UpdateStyle = () => {
 	const location = useLocation();
 	const searchParams = new URLSearchParams(location.search);
 	const id = searchParams.get("id");
+	const username = useSelector((state) => state.username);
 	// console.log(id);
 	const [style, setStyle] = useState([]);
 	//tab
@@ -101,7 +103,6 @@ const UpdateStyle = () => {
 					front: response.data.front,
 					front1: response.data.front1,
 					front2: response.data.front2,
-					stylist_name: response.data.stylist_name,
 					sex: response.data.sex,
 					length: response.data.length,
 					color: response.data.color,
@@ -159,7 +160,6 @@ const UpdateStyle = () => {
 		front: "",
 		front1: "",
 		front2: "",
-		stylist_name: "",
 		sex: "female",
 		length: "",
 		color: "",
@@ -186,6 +186,20 @@ const UpdateStyle = () => {
 		face_type_base: true,
 		face_type_square: true,
 		menu_content: "",
+	});
+
+	const [errors, setErrors] = useState({
+		sync_start_time: "",
+		sync_interval: "",
+		selectedImage1: "",
+		style_name: "",
+		stylist_comment: "",
+		sex: "",
+		length: "",
+		color: "",
+		style_image: "",
+		menu_content: "",
+		selectedImage1: "",
 	});
 	//switch
 
@@ -359,6 +373,51 @@ const UpdateStyle = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		const validationErrors = {};
+		if (!data.sync_start_time) {
+			validationErrors.sync_start_time = "この項目は必須です。";
+		}
+		if (!data.sync_interval) {
+			validationErrors.sync_interval = "この項目は必須です。";
+		}
+
+		if (!data.selectedImage1) {
+			validationErrors.selectedImage1 = "この項目は必須です。";
+		}
+
+		if (!data.style_name) {
+			validationErrors.style_name = "この項目は必須です。";
+		}
+
+		if (!data.stylist_comment) {
+			validationErrors.stylist_comment = "この項目は必須です。";
+		}
+
+		if (!data.sex) {
+			validationErrors.sex = "この項目は必須です。";
+		}
+
+		if (!data.length) {
+			validationErrors.length = "この項目は必須です。";
+		}
+
+		if (!data.color) {
+			validationErrors.color = "この項目は必須です。";
+		}
+
+		if (!data.menu_content) {
+			validationErrors.menu_content = "この項目は必須です。";
+		}
+
+		if (!data.style_image) {
+			validationErrors.style_image = "この項目は必須です。";
+		}
+
+		if (!data.selectedImage1) {
+			validationErrors.selectedImage1 = "この項目は必須です。";
+		}
+
 		const formData = new FormData();
 		formData.append("update_stop", data.update_stop);
 		formData.append("internal_memo", data.internal_memo);
@@ -379,7 +438,7 @@ const UpdateStyle = () => {
 		formData.append("front", data.front);
 		formData.append("front1", data.front1);
 		formData.append("front2", data.front2);
-		formData.append("stylist_name", data.stylist_name);
+		formData.append("stylist_name", username);
 		formData.append("sex", data.sex);
 		formData.append("length", data.length);
 		formData.append("color", data.color);
@@ -459,6 +518,7 @@ const UpdateStyle = () => {
 				// 	menu_content: "",
 				// });
 				console.log(res.data.message);
+				navigate("/home");
 			})
 			.catch((err) => {
 				console.log("Error couldn't create Style");
@@ -470,7 +530,6 @@ const UpdateStyle = () => {
 			.delete(`http://localhost:4000/api/style/${id}`)
 			.then((res) => {
 				console.log(res.data.message);
-				alert("正確に削除されました。");
 				navigate("/home");
 			})
 			.catch((err) => {
@@ -671,7 +730,12 @@ const UpdateStyle = () => {
 																	</div>
 																</Box>
 																<Box>
-																	<div className="mt-3 mb-3">同期開始時間</div>
+																	<div className="mt-3 mb-3">
+																		同期開始時間
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
+																	</div>
 																	<div>
 																		<input
 																			type="time"
@@ -681,9 +745,19 @@ const UpdateStyle = () => {
 																			className=" block w-44 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
 																		/>
 																	</div>
+																	{errors.sync_start_time && (
+																		<span className="text-red-700 text-base">
+																			{errors.sync_start_time}
+																		</span>
+																	)}
 																</Box>
 																<Box>
-																	<div className="mt-3 mb-3">同期間隔</div>
+																	<div className="mt-3 mb-3">
+																		同期間隔
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
+																	</div>
 																	<div>
 																		<FormControl className="w-ull">
 																			<InputLabel
@@ -730,6 +804,11 @@ const UpdateStyle = () => {
 																					1週間
 																				</MenuItem>
 																			</Select>
+																			{errors.sync_interval && (
+																				<span className="text-red-700 text-base">
+																					{errors.sync_interval}
+																				</span>
+																			)}
 																		</FormControl>
 																	</div>
 																</Box>
@@ -834,6 +913,11 @@ const UpdateStyle = () => {
 																			// src="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format"
 																			className="w-auto h-40"
 																		/>
+																		{errors.selectedImage1 && (
+																			<span className="text-red-700 text-base">
+																				{errors.selectedImage1}
+																			</span>
+																		)}
 																	</div>
 																	<div className="flex justify-center items-center">
 																		<Button
@@ -1005,34 +1089,25 @@ const UpdateStyle = () => {
 													<Card className="flex justify-start pl-12 w-full max-md:px-auto max-md:justify-center max-md:pl-0">
 														<CardContent className="rounded-tr-none">
 															<div className="gap-x-16 pb-3 pt-4 max-md:w-[18rem]">
-																<Box className="pb-6 w-20rem">
+																<Box
+																	sx={{ minWidth: 300 }}
+																	className="pb-6 pt-4"
+																>
 																	<Typography className="pb-3">
 																		スタイリスト名
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormControl className="w-full">
-																		<InputLabel id="demo-simple-select-label">
-																			指定なし
-																		</InputLabel>
-																		<Select
-																			labelId="demo-simple-select-label"
-																			id="demo-simple-select"
-																			value={data.stylist_name}
-																			name="stylist_name"
-																			label="指定なし"
-																			onChange={handleChangeSelect}
-																		>
-																			<MenuItem value={"TATSUYA"}>
-																				TATSUYA
-																			</MenuItem>
-																			<MenuItem value={"TAKUMI"}>
-																				TAKUMI
-																			</MenuItem>
-																			<MenuItem value={"GOTA"}>GOTA</MenuItem>
-																			<MenuItem value={"NAOKI"}>NAOKI</MenuItem>
-																			<MenuItem value={"GO 立川"}>
-																				GO 立川
-																			</MenuItem>
-																		</Select>
+																		<TextField
+																			id="outlined-basic"
+																			label="投稿者"
+																			variant="outlined"
+																			// onChange={handleChangeTextarea}
+																			value={username}
+																			name="contributor"
+																		/>
 																	</FormControl>
 																</Box>
 																<Box>
@@ -1048,6 +1123,11 @@ const UpdateStyle = () => {
 																			onChange={handleChangeTextarea}
 																			value={data.stylist_comment}
 																		/>
+																		{errors.stylist_comment && (
+																			<span className="text-red-700 text-base">
+																				{errors.stylist_comment}
+																			</span>
+																		)}
 																	</FormGroup>
 																</Box>
 															</div>
@@ -1087,6 +1167,9 @@ const UpdateStyle = () => {
 																<Box className="pb-6 w-[40rem] max-md:w-[17rem]">
 																	<Typography className="pb-3">
 																		スタイル名 0/30文字
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormControl className="w-full">
 																		<TextField
@@ -1098,6 +1181,11 @@ const UpdateStyle = () => {
 																			value={data.style_name}
 																		/>
 																	</FormControl>
+																	{errors.style_name && (
+																		<span className="text-red-700 text-base">
+																			{errors.style_name}
+																		</span>
+																	)}
 																</Box>
 																<Box sx={{ minWidth: 300 }} className="pb-3">
 																	{/* <Typography className="pb-3">
@@ -1106,6 +1194,9 @@ const UpdateStyle = () => {
 																	<FormControl>
 																		<FormLabel id="demo-radio-buttons-group-label">
 																			カテゴリ
+																			<span className="text-red-600 text-xs pl-2">
+																				*必須"
+																			</span>
 																		</FormLabel>
 																		<RadioGroup
 																			aria-labelledby="demo-radio-buttons-group-label"
@@ -1125,13 +1216,23 @@ const UpdateStyle = () => {
 																				label="メンズ"
 																			/>
 																		</RadioGroup>
+																		{errors.sex && (
+																			<span className="text-red-700 text-base">
+																				{errors.sex}
+																			</span>
+																		)}
 																	</FormControl>
 																</Box>
 																<Box
 																	sx={{ minWidth: 300 }}
 																	className="pb-6 max-md:w-[17rem]"
 																>
-																	<Typography className="pb-3">長さ</Typography>
+																	<Typography className="pb-3">
+																		長さ
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
+																	</Typography>
 																	<FormControl className="w-full">
 																		<InputLabel id="demo-simple-select-label">
 																			選択してください
@@ -1167,6 +1268,11 @@ const UpdateStyle = () => {
 																			</MenuItem>
 																		</Select>
 																	</FormControl>
+																	{errors.length && (
+																		<span className="text-red-700 text-base">
+																			{errors.length}
+																		</span>
+																	)}
 																</Box>
 																<Box
 																	sx={{ minWidth: 300 }}
@@ -1174,6 +1280,9 @@ const UpdateStyle = () => {
 																>
 																	<Typography className="pb-3">
 																		カラー
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormControl className="w-full">
 																		<InputLabel id="demo-simple-select-label">
@@ -1204,6 +1313,11 @@ const UpdateStyle = () => {
 																			</MenuItem>
 																		</Select>
 																	</FormControl>
+																	{errors.color && (
+																		<span className="text-red-700 text-base">
+																			{errors.color}
+																		</span>
+																	)}
 																</Box>
 																<Box
 																	sx={{ minWidth: 300 }}
@@ -1211,6 +1325,9 @@ const UpdateStyle = () => {
 																>
 																	<Typography className="pb-3">
 																		イメージ
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormControl className="w-full">
 																		<InputLabel id="demo-simple-select-label">
@@ -1246,10 +1363,18 @@ const UpdateStyle = () => {
 																			</MenuItem>
 																		</Select>
 																	</FormControl>
+																	{errors.style_name && (
+																		<span className="text-red-700 text-base">
+																			{errors.style_image}
+																		</span>
+																	)}
 																</Box>
 																<Box sx={{ minWidth: 300 }} className="pb-6">
 																	<Typography className="pb-3">
 																		メニュー内容0/50文字
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormGroup>
 																		<FormControlLabel

@@ -52,6 +52,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 //checkbox
 import Checkbox from "@mui/material/Checkbox";
 import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
+import { useSelector } from "react-redux";
 
 const VisuallyHiddenInput = styled("input")({
 	clip: "rect(0 0 0 0)",
@@ -69,9 +70,14 @@ const AddBlog = () => {
 	const [key, setKey] = useState("post");
 	const [show, setShow] = useState("");
 	const [flag, setFlag] = useState(false);
+
+	//redux
+	const username = useSelector((state) => state.username);
+	console.log("username!!!: ", username);
+
 	const [data, setData] = useState({
 		post_date: "",
-		contributor: "",
+		// contributor: username,
 		category: "",
 		title_character: "",
 		coupon: "",
@@ -79,11 +85,14 @@ const AddBlog = () => {
 		uploadImage: null,
 		post_text: "",
 	});
+	// console.log("data.contributor: ", data.contributor);
 	const [errors, setErrors] = useState({
 		post_date: "",
-		contributor: "",
+		// contributor: "",
 		category: "",
 		title_character: "",
+		coupon: "",
+		uploadImage: "",
 		post_text: "",
 	});
 
@@ -132,9 +141,9 @@ const AddBlog = () => {
 		if (!data.post_date) {
 			validationErrors.post_date = "この項目は必須です。";
 		}
-		if (!data.contributor) {
-			validationErrors.contributor = "この項目は必須です。";
-		}
+		// if (!data.contributor) {
+		// 	validationErrors.contributor = "この項目は必須です。";
+		// }
 
 		if (!data.category) {
 			validationErrors.category = "この項目は必須です。";
@@ -147,6 +156,12 @@ const AddBlog = () => {
 		if (!data.post_text) {
 			validationErrors.post_text = "この項目は必須です。";
 		}
+		if (!data.coupon) {
+			validationErrors.coupon = "この項目は必須です。";
+		}
+		if (!data.uploadImage) {
+			validationErrors.uploadImage = "この項目は必須です。";
+		}
 		console.log("validationErrors: ", validationErrors);
 		if (Object.keys(validationErrors).length > 0) {
 			setErrors(validationErrors);
@@ -155,7 +170,7 @@ const AddBlog = () => {
 
 		const formData = new FormData();
 		formData.append("post_date", data.post_date);
-		formData.append("contributor", data.contributor);
+		formData.append("contributor", username);
 		formData.append("category", data.category);
 		formData.append("title_character", data.title_character);
 		formData.append("coupon", data.coupon);
@@ -169,7 +184,7 @@ const AddBlog = () => {
 			.then((res) => {
 				setData({
 					post_date: "",
-					contributor: "",
+					// contributor: username,
 					category: "",
 					title_character: "",
 					coupon: "",
@@ -399,7 +414,7 @@ const AddBlog = () => {
 																	</span>
 																)}
 															</Box>
-															<Box>
+															{/* <Box>
 																<div className="mt-3 mb-3">
 																	投稿者
 																	<span className="text-red-600 text-xs pl-2">
@@ -442,6 +457,25 @@ const AddBlog = () => {
 																		{errors.contributor}
 																	</span>
 																)}
+															</Box> */}
+
+															<Box sx={{ minWidth: 300 }} className="pb-6 pt-4">
+																<Typography className="pb-3">
+																	投稿者
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
+																</Typography>
+																<FormControl className="w-full">
+																	<TextField
+																		id="outlined-basic"
+																		label="投稿者"
+																		variant="outlined"
+																		// onChange={handleChangeTextarea}
+																		value={username}
+																		name="contributor"
+																	/>
+																</FormControl>
 															</Box>
 
 															<Box>
@@ -512,6 +546,9 @@ const AddBlog = () => {
 															<Box sx={{ minWidth: 300 }} className="pb-6">
 																<Typography className="pb-3">
 																	クーポン
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
 																</Typography>
 																<FormControl className="w-full">
 																	<InputLabel id="demo-simple-select-label">
@@ -723,6 +760,11 @@ const AddBlog = () => {
 																		</MenuItem>
 																	</Select>
 																</FormControl>
+																{errors.coupon && (
+																	<span className="text-red-700 text-base">
+																		{errors.coupon}
+																	</span>
+																)}
 															</Box>
 															<Box sx={{ minWidth: 300 }} className="pb-6">
 																<Typography className="pb-3">署名</Typography>
@@ -820,6 +862,13 @@ const AddBlog = () => {
 																				)}
 																			/>
 																		</Button>
+																	</div>
+																	<div className="flex justify-center items-center pt-1">
+																		{errors.uploadImage && (
+																			<span className="text-red-700 text-base">
+																				{errors.uploadImage}
+																			</span>
+																		)}
 																	</div>
 																</div>
 															</div>

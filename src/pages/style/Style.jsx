@@ -107,7 +107,14 @@ const Style = () => {
 		setAge(event.target.value);
 	};
 	const columns = [
-		{ field: "id", headerName: "番号", type: "number", width: 50 },
+		{
+			field: "id",
+			headerName: "番号",
+			type: "number",
+			width: 50,
+			align: "center",
+			headerAlign: "center",
+		},
 		{
 			field: "image",
 			headerName: "写真",

@@ -72,7 +72,14 @@ const Admin = () => {
 	}, []);
 
 	const columns = [
-		{ field: "id", headerName: "番号", type: "number", width: 50 },
+		{
+			field: "id",
+			headerName: "番号",
+			type: "number",
+			width: 50,
+			align: "center",
+			headerAlign: "center",
+		},
 		{
 			field: "email",
 			headerName: "電子メール",

@@ -136,6 +136,7 @@ const UpdateAdmin = () => {
 			.put(`http://localhost:4000/${id}`, data)
 			.then((res) => {
 				console.log(res.data.message);
+				navigate("/admin");
 			})
 			.catch((err) => {
 				console.log("Error couldn't update blog");
@@ -148,7 +149,6 @@ const UpdateAdmin = () => {
 			.delete(`http://localhost:4000/${id}`)
 			.then((res) => {
 				console.log(res.data.message);
-				alert("正確に削除されました。");
 				navigate("/admin");
 			})
 			.catch((err) => {
