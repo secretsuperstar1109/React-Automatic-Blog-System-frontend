@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 // import { ToastContainer, toast } from "react-toastify";
@@ -38,65 +38,53 @@ function classNames(...classes) {
 }
 
 const Stylist = () => {
+	const [userData, setUserData] = useState([]);
 	const navigate = useNavigate();
-	const add_style = () => {
-		navigate("/add-style");
-	};
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await axios.get("http://localhost:4000/");
+				const stylist_name = response.data.filter(
+					(item) => item.permission === "user"
+				);
+				// console.log("userData: ", stylist_name);
+				setUserData(stylist_name);
+				// console.log(response.data);
+				// setStylelist(response.data);
+				// console.log("stylelist: ", response.data);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchData();
+	}, []);
 	const columns = [
-		{ field: "id", headerName: "番号", type: "number", width: 50 },
 		{
-			field: "image",
-			headerName: "写真",
-			width: 200,
-			renderCell: (params) => (
-				<img
-					src={params.row.image}
-					alt=""
-					width={params.row.imageWidth}
-					height={params.row.imageHeight}
-				/>
-			),
-		},
-		{ field: "style_name", headerName: "スタイル名", type: "text", width: 300 },
-	];
-
-	const rows = [
-		{
-			id: 1,
-			image:
-				"https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format",
-			style_name: "Jon",
-			imageWidth: 100,
-			imageHeight: 100,
+			field: "id",
+			headerName: "番号",
+			type: "number",
+			width: 100,
+			align: "center",
+			headerAlign: "center",
 		},
 		{
-			id: 2,
-			image:
-				"https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format",
-			style_name: "Jon",
-			imageWidth: 100,
-			imageHeight: 100,
-		},
-		{
-			id: 3,
-			image:
-				"https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format",
-			style_name: "Jon",
-			imageWidth: 100,
-			imageHeight: 100,
+			field: "username",
+			headerName: "美容師",
+			width: 300,
 		},
 	];
+	console.log("userData: ", userData);
+	const rows = userData.map((item, index) => ({
+		id: index + 1,
+		username: item.username,
+	}));
 
 	return (
 		<>
 			<div className="container-xl min-h-screen">
 				<div className="flex flex-col justify-center items-center w-full">
 					<div className="mt-8 flex justify-center items-center gap-x-6 flex-wrap max-md:gap-y-6">
-						<Button
-							variant="contained"
-							onClick={add_style}
-							className="py-2 w-48"
-						>
+						<Button variant="contained" className="py-2 w-48">
 							同期する
 						</Button>
 						<Typography variant="h7">最終同期 2023-11-13 10:41</Typography>

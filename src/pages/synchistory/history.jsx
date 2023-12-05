@@ -104,7 +104,14 @@ const History = () => {
 		});
 	};
 	const columns = [
-		{ field: "id", headerName: "番号", type: "number", width: 50 },
+		{
+			field: "id",
+			headerName: "番号",
+			type: "number",
+			width: 50,
+			align: "center",
+			headerAlign: "center",
+		},
 		{
 			field: "sync_time",
 			headerName: "同期時刻",
@@ -133,11 +140,11 @@ const History = () => {
 	// 	_id: item._id,
 	// }));
 	const rows = [
-		{ id: 1, sync_time: "Snow", type: "Jon", content: 35 },
-		{ id: 2, sync_time: "Snow", type: "Jon", content: 35 },
-		{ id: 3, sync_time: "Snow", type: "Jon", content: 35 },
-		{ id: 4, sync_time: "Snow", type: "Jon", content: 35 },
-		{ id: 5, sync_time: "Snow", type: "Jon", content: 35 },
+		{ id: 1, sync_time: "11", type: "形", content: 35 },
+		{ id: 2, sync_time: "11", type: "形", content: 35 },
+		{ id: 3, sync_time: "11", type: "形", content: 35 },
+		{ id: 4, sync_time: "11", type: "形", content: 35 },
+		{ id: 5, sync_time: "11", type: "形", content: 35 },
 	];
 
 	const handleChange_select = (event) => {

@@ -52,6 +52,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 //checkbox
 import Checkbox from "@mui/material/Checkbox";
+import { useSelector } from "react-redux";
 
 const VisuallyHiddenInput = styled("input")({
 	clip: "rect(0 0 0 0)",
@@ -71,12 +72,14 @@ const UpdateBlog = () => {
 	const [flag, setFlag] = useState(true);
 	const [key, setKey] = useState("post");
 	const location = useLocation();
+	//redux
+	const username = useSelector((state) => state.username);
 	const searchParams = new URLSearchParams(location.search);
 	const id = searchParams.get("id");
 	const [blog, setBlog] = useState([]);
 	const [data, setData] = useState({
 		post_date: "",
-		contributor: "",
+		// contributor: "",
 		category: "",
 		title_character: "",
 		coupon: "",
@@ -87,10 +90,12 @@ const UpdateBlog = () => {
 
 	const [errors, setErrors] = useState({
 		post_date: "",
-		contributor: "",
+		// contributor: "",
 		category: "",
 		title_character: "",
 		post_text: "",
+		coupon: "",
+		uploadImage: "",
 	});
 
 	useEffect(() => {
@@ -102,7 +107,7 @@ const UpdateBlog = () => {
 				setBlog(response.data);
 				setData({
 					post_date: response.data.post_date,
-					contributor: response.data.contributor,
+					// contributor: response.data.contributor,
 					category: response.data.category,
 					title_character: response.data.title_character,
 					coupon: response.data.coupon,
@@ -166,9 +171,9 @@ const UpdateBlog = () => {
 		if (!data.post_date) {
 			validationErrors.post_date = "この項目は必須です。";
 		}
-		if (!data.contributor) {
-			validationErrors.contributor = "この項目は必須です。";
-		}
+		// if (!data.contributor) {
+		// 	validationErrors.contributor = "この項目は必須です。";
+		// }
 
 		if (!data.category) {
 			validationErrors.category = "この項目は必須です。";
@@ -181,13 +186,19 @@ const UpdateBlog = () => {
 		if (!data.post_text) {
 			validationErrors.post_text = "この項目は必須です。";
 		}
+		if (!data.coupon) {
+			validationErrors.coupon = "この項目は必須です。";
+		}
+		if (!data.uploadImage) {
+			validationErrors.uploadImage = "この項目は必須です。";
+		}
 		if (Object.keys(validationErrors).length > 0) {
 			setErrors(validationErrors);
 			return;
 		}
 
 		formData.append("post_date", data.post_date);
-		formData.append("contributor", data.contributor);
+		formData.append("contributor", username);
 		formData.append("category", data.category);
 		formData.append("title_character", data.title_character);
 		formData.append("coupon", data.coupon);
@@ -211,6 +222,7 @@ const UpdateBlog = () => {
 				// 	post_text: "",
 				// });
 				console.log(res.data.message);
+				navigate("/blog");
 			})
 			.catch((err) => {
 				console.log("Error couldn't update blog");
@@ -222,7 +234,6 @@ const UpdateBlog = () => {
 			.delete(`http://localhost:4000/api/blog/${id}`)
 			.then((res) => {
 				console.log(res.data.message);
-				alert("正確に削除されました。");
 				navigate("/blog");
 			})
 			.catch((err) => {
@@ -417,7 +428,7 @@ const UpdateBlog = () => {
 																	</span>
 																)}
 															</Box>
-															<Box>
+															{/* <Box>
 																<div className="mt-3 mb-3">
 																	投稿者
 																	<span className="text-red-600 text-xs pl-2">
@@ -460,8 +471,25 @@ const UpdateBlog = () => {
 																		{errors.contributor}
 																	</span>
 																)}
+															</Box> */}
+															<Box sx={{ minWidth: 300 }} className="pb-6 pt-4">
+																<Typography className="pb-3">
+																	投稿者
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
+																</Typography>
+																<FormControl className="w-full">
+																	<TextField
+																		id="outlined-basic"
+																		label="投稿者"
+																		variant="outlined"
+																		// onChange={handleChangeTextarea}
+																		value={username}
+																		name="contributor"
+																	/>
+																</FormControl>
 															</Box>
-
 															<Box>
 																<div className="mt-3 mb-3">
 																	カテゴリ
@@ -536,6 +564,9 @@ const UpdateBlog = () => {
 															>
 																<Typography className="pb-3">
 																	クーポン
+																	<span className="text-red-600 text-xs pl-2">
+																		*必須"
+																	</span>
 																</Typography>
 																<FormControl className="w-full">
 																	<InputLabel id="demo-simple-select-label">
@@ -747,6 +778,11 @@ const UpdateBlog = () => {
 																		</MenuItem>
 																	</Select>
 																</FormControl>
+																{errors.coupon && (
+																	<span className="text-red-700 text-base">
+																		{errors.coupon}
+																	</span>
+																)}
 															</Box>
 															<Box
 																sx={{ minWidth: 300 }}
@@ -847,6 +883,13 @@ const UpdateBlog = () => {
 																				)}
 																			/>
 																		</Button>
+																	</div>
+																	<div className="flex justify-center items-center pt-1">
+																		{errors.uploadImage && (
+																			<span className="text-red-700 text-base">
+																				{errors.uploadImage}
+																			</span>
+																		)}
 																	</div>
 																</div>
 															</div>

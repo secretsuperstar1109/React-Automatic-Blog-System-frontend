@@ -29,8 +29,6 @@ let navigation = [
 	{ name: "お知らせ", href: "/notice", current: false },
 ];
 
-let adminAdded = false;
-
 const userNavigation = [
 	{ name: "Your Profile", href: "/profile" },
 	{ name: "Logout", href: "/logout" },
@@ -86,13 +84,20 @@ const Stylenav = () => {
 			console.log("style-nav-username: ", username);
 			console.log("style-user_salon_id: ", user_salon_id);
 			console.log("style-id:", id);
-			if (permission == "manager" && !adminAdded) {
-				navigation.push({
-					name: "管理者ページ",
-					href: "/admin",
-					current: false,
-				});
-				adminAdded = true;
+			console.log("permission: ", permission);
+			if (permission == "manager") {
+				const isAdminPageExists = navigation.find(
+					(page) => page.name === "管理者ページ"
+				);
+				if (!isAdminPageExists) {
+					navigation.push({
+						name: "管理者ページ",
+						href: "/admin",
+						current: false,
+					});
+				}
+			} else if (permission === "user") {
+				navigation = navigation.filter((page) => page.name !== "管理者ページ");
 			}
 
 			if (status) {

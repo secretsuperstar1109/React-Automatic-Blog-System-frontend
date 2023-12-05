@@ -51,11 +51,13 @@ import RadioGroup from "@mui/material/RadioGroup";
 //checkbox
 import Checkbox from "@mui/material/Checkbox";
 import StyleTemplate from "./StyleTemplate";
+import { useSelector } from "react-redux";
 //checkbox-select
 
 const AddStyle = () => {
 	//tab
 	const [key, setKey] = useState("home");
+	const username = useSelector((state) => state.username);
 	const [show, setShow] = useState({
 		selectedImage1: "",
 		selectedImage2: "",
@@ -86,7 +88,6 @@ const AddStyle = () => {
 		front: "Front",
 		front1: "",
 		front2: "",
-		stylist_name: "",
 		sex: "female",
 		length: "",
 		color: "",
@@ -120,7 +121,6 @@ const AddStyle = () => {
 		sync_interval: "",
 		selectedImage1: "",
 		style_name: "",
-		stylist_name: "",
 		stylist_comment: "",
 		sex: "",
 		length: "",
@@ -339,9 +339,7 @@ const AddStyle = () => {
 		if (!data.stylist_comment) {
 			validationErrors.stylist_comment = "この項目は必須です。";
 		}
-		if (!data.stylist_name) {
-			validationErrors.stylist_name = "この項目は必須です。";
-		}
+
 		if (!data.sex) {
 			validationErrors.sex = "この項目は必須です。";
 		}
@@ -392,7 +390,7 @@ const AddStyle = () => {
 		formData.append("front", data.front);
 		formData.append("front1", data.front1);
 		formData.append("front2", data.front2);
-		formData.append("stylist_name", data.stylist_name);
+		formData.append("stylist_name", username);
 		formData.append("sex", data.sex);
 		formData.append("length", data.length);
 		formData.append("color", data.color);
@@ -1046,40 +1044,26 @@ const AddStyle = () => {
 													<Card className="flex justify-start pl-12 w-full max-md:px-4">
 														<CardContent className="rounded-tr-none">
 															<div className="gap-x-16 pb-3 pt-4">
-																<Box className="pb-6 w-[40rem] max-md:w-[15rem]">
+																<Box
+																	sx={{ minWidth: 300 }}
+																	className="pb-6 pt-4"
+																>
 																	<Typography className="pb-3">
 																		スタイリスト名
+																		<span className="text-red-600 text-xs pl-2">
+																			*必須"
+																		</span>
 																	</Typography>
 																	<FormControl className="w-full">
-																		<InputLabel id="demo-simple-select-label">
-																			指定なし
-																		</InputLabel>
-																		<Select
-																			labelId="demo-simple-select-label"
-																			id="demo-simple-select"
-																			value={data.stylist_name}
-																			name="stylist_name"
-																			label="指定なし"
-																			onChange={handleChangeSelect}
-																		>
-																			<MenuItem value={"TATSUYA"}>
-																				TATSUYA
-																			</MenuItem>
-																			<MenuItem value={"TAKUMI"}>
-																				TAKUMI
-																			</MenuItem>
-																			<MenuItem value={"GOTA"}>GOTA</MenuItem>
-																			<MenuItem value={"NAOKI"}>NAOKI</MenuItem>
-																			<MenuItem value={"GO 立川"}>
-																				GO 立川
-																			</MenuItem>
-																		</Select>
+																		<TextField
+																			id="outlined-basic"
+																			label="投稿者"
+																			variant="outlined"
+																			// onChange={handleChangeTextarea}
+																			value={username}
+																			name="contributor"
+																		/>
 																	</FormControl>
-																	{errors.stylist_name && (
-																		<span className="text-red-700 text-base">
-																			{errors.stylist_name}
-																		</span>
-																	)}
 																</Box>
 																<Box>
 																	<div className="mb-2 mt-1">
