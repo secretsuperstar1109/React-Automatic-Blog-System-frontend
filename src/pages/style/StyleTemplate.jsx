@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -51,113 +51,127 @@ import RadioGroup from "@mui/material/RadioGroup";
 //checkbox
 import Checkbox from "@mui/material/Checkbox";
 //datagrid
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, jaJP } from "@mui/x-data-grid";
+//
+import { prefixer } from "stylis";
+import rtlPlugin from "stylis-plugin-rtl";
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 
 const StyleTemplate = () => {
-	const columns = [
-		{ field: "id", headerName: "番号", type: "number", width: 50 },
-		{
-			field: "template_name",
-			headerName: "テンプレート名",
-			type: "text",
-			width: 200,
-		},
-		{ field: "style_name", headerName: "スタイル名", type: "text", width: 200 },
-		{
-			field: "category",
-			headerName: "カテゴリ",
-			type: "text",
-			width: 200,
-		},
-		{
-			field: "length",
-			headerName: "長さ",
-			type: "text",
-			width: 200,
-		},
-		{
-			field: "color",
-			headerName: "カラー",
-			type: "text",
-			width: 200,
-		},
-		{
-			field: "image",
-			headerName: "写真",
-			width: 200,
-			renderCell: (params) => (
-				<img
-					src={params.row.image}
-					alt=""
-					width={params.row.imageWidth}
-					height={params.row.imageHeight}
-				/>
-			),
-		},
-		// {
-		// 	field: "fullName",
-		// 	headerName: "Full name",
-		// 	description: "This column has a value getter and is not sortable.",
-		// 	sortable: false,
-		// 	width: 160,
-		// 	valueGetter: (params) =>
-		// 		`${params.row.firstName || ""} ${params.row.lastName || ""}`,
-		// },
-	];
+  const existingTheme = useTheme();
 
-	const rows = [
-		{
-			id: 1,
-			template_name: "asd",
-			style_name: "Jon",
-			category: "ds",
-			length: "ad",
-			color: "d",
-			image:
-				"https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format",
-			imageWidth: 100,
-			imageHeight: 100,
-		},
-	];
-	//add_template
-	const navigate = useNavigate();
-	const addStyleTemplate = () => {
-		navigate("/add-style-template");
-	};
+  const theme = useMemo(
+    () => createTheme({}, jaJP, existingTheme),
+    [existingTheme]
+  );
+  const columns = [
+    { field: "id", headerName: "番号", type: "number", width: 50 },
+    {
+      field: "template_name",
+      headerName: "テンプレート名",
+      type: "text",
+      width: 200,
+    },
+    { field: "style_name", headerName: "スタイル名", type: "text", width: 200 },
+    {
+      field: "category",
+      headerName: "カテゴリ",
+      type: "text",
+      width: 200,
+    },
+    {
+      field: "length",
+      headerName: "長さ",
+      type: "text",
+      width: 200,
+    },
+    {
+      field: "color",
+      headerName: "カラー",
+      type: "text",
+      width: 200,
+    },
+    {
+      field: "image",
+      headerName: "写真",
+      width: 200,
+      renderCell: (params) => (
+        <img
+          src={params.row.image}
+          alt=""
+          width={params.row.imageWidth}
+          height={params.row.imageHeight}
+        />
+      ),
+    },
+    // {
+    // 	field: "fullName",
+    // 	headerName: "Full name",
+    // 	description: "This column has a value getter and is not sortable.",
+    // 	sortable: false,
+    // 	width: 160,
+    // 	valueGetter: (params) =>
+    // 		`${params.row.firstName || ""} ${params.row.lastName || ""}`,
+    // },
+  ];
 
-	return (
-		<>
-			<div className="container-xl min-h-screen">
-				<div className="flex justify-center items-center mt-12">
-					<Box>
-						<Button
-							variant="contained"
-							className="w-72 py-2"
-							onClick={addStyleTemplate}
-						>
-							新規テンプレート
-						</Button>
-					</Box>
-				</div>
-				<div className="px-12 pt-16 max-md:px-4">
-					<div style={{ height: "100%", width: "100%" }}>
-						<DataGrid
-							rows={rows}
-							columns={columns}
-							initialState={{
-								pagination: {
-									paginationModel: { page: 0, pageSize: 10 },
-								},
-							}}
-							pageSizeOptions={[5, 10, 20, 30]}
-							checkboxSelection
-							rowHeight={120}
-						/>
-					</div>
-				</div>
-			</div>
-		</>
-	);
+  const rows = [
+    {
+      id: 1,
+      template_name: "asd",
+      style_name: "Jon",
+      category: "ds",
+      length: "ad",
+      color: "d",
+      image:
+        "https://os3-318-48579.vs.sakura.ne.jp/images/2d8094f9-5fa3-41e9-ae23-2c0b3fb55002-1701826965023.png",
+      imageWidth: 100,
+      imageHeight: 100,
+    },
+  ];
+  //add_template
+  const navigate = useNavigate();
+  const addStyleTemplate = () => {
+    navigate("/add-style-template");
+  };
+
+  return (
+    <>
+      <div className="container-xl min-h-screen">
+        <div className="flex justify-center items-center mt-12">
+          <Box>
+            <Button
+              variant="contained"
+              className="w-72 py-2"
+              onClick={addStyleTemplate}
+            >
+              新規テンプレート
+            </Button>
+          </Box>
+        </div>
+        <div className="px-12 pt-16 max-md:px-4">
+          <div style={{ height: "100%", width: "100%" }}>
+            <ThemeProvider theme={theme}>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 10 },
+                  },
+                }}
+                pageSizeOptions={[5, 10, 20, 30]}
+                checkboxSelection
+                rowHeight={120}
+              />
+            </ThemeProvider>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default StyleTemplate;

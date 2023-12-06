@@ -53,136 +53,134 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Checkbox from "@mui/material/Checkbox";
 
 const Notice = () => {
-	const [age, setAge] = useState("");
-	const [show, setShow] = useState(false);
+  const [age, setAge] = useState("");
+  const [show, setShow] = useState(false);
 
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-	return (
-		<>
-			<div className="container-xl min-h-screen">
-				<div>
-					<Stylenav />
-					<header className="bg-white shadow">
-						<div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
-							<h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
-								お知らせ
-							</h1>
-						</div>
-					</header>
-					<main>
-						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
-							<div>
-								<div className="container-xl m-auto">
-									<div className="flex flex-col justify-center items-center w-full">
-										<Box
-											sx={{ flexGrow: 1 }}
-											className="w-full max-w-4xl pt-6 mx-auto"
-										>
-											<AppBar position="static" className="rounded-t-lg">
-												<Toolbar>
-													{/* <IconButton
+  return (
+    <>
+      <div className="container-xl min-h-screen">
+        <div>
+          <Stylenav />
+          <header className="bg-white shadow">
+            <div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
+                お知らせ
+              </h1>
+            </div>
+          </header>
+          <main>
+            <div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
+              <div>
+                <div className="container-xl m-auto">
+                  <div className="flex flex-col justify-center items-center w-full">
+                    <Box
+                      sx={{ flexGrow: 1 }}
+                      className="w-full max-w-4xl pt-6 mx-auto"
+                    >
+                      <AppBar position="static" className="rounded-t-lg">
+                        <Toolbar>
+                          {/* <IconButton
 															size="large"
 															edge="start"
 															color="inherit"
 															aria-label="menu"
 															sx={{ mr: 2 }}
 														> */}
-													{/* <MenuIcon className="mr-6" /> */}
-													{/* </IconButton> */}
-													<Typography
-														variant="h6"
-														component="div"
-														sx={{ flexGrow: 1 }}
-													>
-														2023-11-13
-													</Typography>
-													{/* <Button color="inherit">Login</Button> */}
-												</Toolbar>
-											</AppBar>
-											<Card className="flex justify-start w-full pl-8 max-md:justify-center max-md:px-2">
-												<CardContent className="rounded-tr-none">
-													<div
-														className="w-[55rem] max-md:w-full"
-														onClick={handleShow}
-													>
-														<div>
-															<div className="pt-6">
-																<div className="pb-2">
-																	<Typography variant="h6">
-																		【口コミ自動返信機能β版】リリース
-																	</Typography>
-																</div>
-															</div>
-														</div>
-														<div>
-															<div className="pt-2 pl-3">
-																<div className="pb-2">
-																	<Typography
-																		variant="h6"
-																		className="text-cyan-600"
-																	>
-																		Information
-																	</Typography>
-																</div>
-															</div>
-														</div>
-													</div>
-													<Modal
-														show={show}
-														onHide={handleClose}
-														className="px-8 max-md:px-0 max-md:w-full max-md:mt-14"
-													>
-														<Modal.Header closeButton>
-															<Modal.Title className="max-md:text-xl">
-																2023-11-13
-															</Modal.Title>
-														</Modal.Header>
-														<Modal.Body>
-															<div className="text-xl pb-3 max-md:text-lg">
-																【口コミ自動返信機能β版】リリース
-															</div>
-															<div className="text-lg max-md:text-base">
-																<div className="pb-3">
-																	平素より『Style
-																	Tokyo』をご利用いただきまして誠にありがとうございます。
-																</div>
-																<div className="pb-3">
-																	ご利用のお客様へ、以下のアップデートを実施したことをお知らせいたします。
-																</div>
-																<div className="pb-3">
-																	・口コミ自動返信機能β版を追加
-																</div>
-																<div className="pb-3">
-																	・上記に伴い、UIを変更
-																</div>
-																<div className="pb-3">
-																	※β版では口コミの同期、文章の生成のみとなります。返信は行えませんまた、口コミ自動返信機能はお試し期間として以下の期間ご利用いただけます。
-																</div>
-															</div>
-														</Modal.Body>
-														<Modal.Footer>
-															<Button variant="secondary" onClick={handleClose}>
-																閉じる
-															</Button>
-															{/* <Button variant="primary" onClick={handleClose}>
+                          {/* <MenuIcon className="mr-6" /> */}
+                          {/* </IconButton> */}
+                          <Typography
+                            variant="h6"
+                            component="div"
+                            sx={{ flexGrow: 1 }}
+                          >
+                            2023-11-13
+                          </Typography>
+                          {/* <Button color="inherit">Login</Button> */}
+                        </Toolbar>
+                      </AppBar>
+                      <Card className="flex justify-start w-full pl-8 max-md:justify-center max-md:px-2">
+                        <CardContent className="rounded-tr-none">
+                          <div
+                            className="w-[55rem] max-md:w-full"
+                            onClick={handleShow}
+                          >
+                            <div>
+                              <div className="pt-6">
+                                <div className="pb-2">
+                                  <Typography variant="h6">
+                                    ありがとうございます。
+                                  </Typography>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="pt-2 pl-3">
+                                <div className="pb-2">
+                                  <Typography
+                                    variant="h6"
+                                    className="text-cyan-600"
+                                  >
+                                    Information
+                                  </Typography>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <Modal
+                            show={show}
+                            onHide={handleClose}
+                            className="px-8 max-md:px-0 max-md:w-full max-md:mt-14"
+                          >
+                            <Modal.Header closeButton>
+                              <Modal.Title className="max-md:text-xl">
+                                2023-11-13
+                              </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <div className="text-xl pb-3 max-md:text-lg">
+                                ありがとうございます。
+                              </div>
+                              <div className="text-lg max-md:text-base">
+                                <div className="pb-3">
+                                  平素より『Style
+                                  Tokyo』をご利用いただきまして誠にありがとうございます。
+                                </div>
+                                <div className="pb-3">
+                                  ご利用のお客様へ、以下のアップデートを実施したことをお知らせいたします。
+                                </div>
+                                <div className="pb-3">・ユーザーID変更機能</div>
+                                <div className="pb-3">
+                                  ・上記に伴い、UIを変更
+                                </div>
+                                {/* <div className="pb-3">
+                                  ※β版では口コミの同期、文章の生成のみとなります。返信は行えませんまた、口コミ自動返信機能はお試し期間として以下の期間ご利用いただけます。
+                                </div> */}
+                              </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={handleClose}>
+                                閉じる
+                              </Button>
+                              {/* <Button variant="primary" onClick={handleClose}>
 																Save Changes
 															</Button> */}
-														</Modal.Footer>
-													</Modal>
-												</CardContent>
-											</Card>
-										</Box>
-									</div>
-								</div>
-							</div>
-						</div>
-					</main>
-				</div>
-			</div>
-		</>
-	);
+                            </Modal.Footer>
+                          </Modal>
+                        </CardContent>
+                      </Card>
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Notice;

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -51,151 +51,168 @@ import RadioGroup from "@mui/material/RadioGroup";
 //checkbox
 import Checkbox from "@mui/material/Checkbox";
 //datagrid
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, jaJP } from "@mui/x-data-grid";
+//
+import { prefixer } from "stylis";
+import rtlPlugin from "stylis-plugin-rtl";
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 
 const BlogList = () => {
-	const [blog, setBlog] = useState([]);
+  const [blog, setBlog] = useState([]);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios.get("http://localhost:4000/api/blog");
-				// console.log(response.data);
-				setBlog(response.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://os3-318-48579.vs.sakura.ne.jp/api/blog"
+        );
+        // console.log(response.data);
+        setBlog(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-		fetchData();
-	}, []);
+    fetchData();
+  }, []);
 
-	const columns = [
-		{
-			field: "id",
-			headerName: "番号",
-			type: "number",
-			width: 50,
-			align: "center",
-			headerAlign: "center",
-		},
-		{
-			field: "image",
-			headerName: "写真",
-			width: 160,
-			renderCell: (params) => (
-				<img
-					src={params.row.image}
-					alt=""
-					width={params.row.imageWidth}
-					height={params.row.imageHeight}
-				/>
-			),
-		},
-		{
-			field: "post_date",
-			headerName: "投稿日時",
-			type: "text",
-			width: 120,
-			renderCell: (params) => (
-				<a href={`/update-blog?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-		{
-			field: "contributor",
-			headerName: "投稿者",
-			type: "text",
-			width: 120,
-			renderCell: (params) => (
-				<a href={`/update-blog?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-		{
-			field: "category",
-			headerName: "カテゴリー",
-			type: "text",
-			width: 160,
-			renderCell: (params) => (
-				<a href={`/update-blog?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-		{
-			field: "title_character",
-			headerName: "タイトル",
-			type: "text",
-			width: 220,
-			renderCell: (params) => (
-				<a href={`/update-blog?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-		{
-			field: "coupon",
-			headerName: "クーポン",
-			type: "text",
-			width: 400,
-			renderCell: (params) => (
-				<a href={`/update-blog?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-		{
-			field: "post_text",
-			headerName: "記事",
-			type: "text",
-			width: 450,
-			renderCell: (params) => (
-				<a href={`/update-blog?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-	];
+  const existingTheme = useTheme();
 
-	const rows = blog.map((item, index) => ({
-		id: index + 1,
-		image: item.uploadImage,
-		post_date: item.post_date,
-		contributor: item.contributor,
-		title_character: item.title_character,
-		coupon: item.coupon,
-		post_text: item.post_text,
-		category: item.category,
-		imageWidth: 100,
-		imageHeight: 100,
-		_id: item._id,
-	}));
+  const theme = useMemo(
+    () => createTheme({}, jaJP, existingTheme),
+    [existingTheme]
+  );
 
-	const navigate = useNavigate();
-	const addBlog = () => {
-		navigate("/add-blog");
-	};
+  const columns = [
+    {
+      field: "id",
+      headerName: "番号",
+      type: "number",
+      width: 50,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "image",
+      headerName: "写真",
+      width: 160,
+      renderCell: (params) => (
+        <img
+          src={params.row.image}
+          alt=""
+          width={params.row.imageWidth}
+          height={params.row.imageHeight}
+        />
+      ),
+    },
+    {
+      field: "post_date",
+      headerName: "投稿日時",
+      type: "text",
+      width: 120,
+      renderCell: (params) => (
+        <Link to={`/update-blog?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: "contributor",
+      headerName: "投稿者",
+      type: "text",
+      width: 120,
+      renderCell: (params) => (
+        <Link to={`/update-blog?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: "category",
+      headerName: "カテゴリー",
+      type: "text",
+      width: 160,
+      renderCell: (params) => (
+        <Link to={`/update-blog?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: "title_character",
+      headerName: "タイトル",
+      type: "text",
+      width: 220,
+      renderCell: (params) => (
+        <Link to={`/update-blog?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: "coupon",
+      headerName: "クーポン",
+      type: "text",
+      width: 400,
+      renderCell: (params) => (
+        <Link to={`/update-blog?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: "post_text",
+      headerName: "記事",
+      type: "text",
+      width: 450,
+      renderCell: (params) => (
+        <Link to={`/update-blog?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+  ];
 
-	return (
-		<>
-			<div className="container-xl min-h-screen">
-				<div className="flex justify-center pt-6">
-					<Box>
-						<Button variant="contained" className="w-48 py-2" onClick={addBlog}>
-							ブログ追加
-						</Button>
-					</Box>
-				</div>
-				<div className="px-12 pt-16 max-md:px-0">
-					<div blog={{ height: "100%", width: "100%" }}>
-						<DataGrid
-							rows={rows}
-							columns={columns}
-							initialState={{
-								pagination: {
-									paginationModel: { page: 0, pageSize: 10 },
-								},
-							}}
-							pageSizeOptions={[5, 10, 20, 30]}
-							checkboxSelection
-							rowHeight={120}
-						/>
-					</div>
-				</div>
-			</div>
-		</>
-	);
+  const rows = blog.map((item, index) => ({
+    id: index + 1,
+    image: item.uploadImage,
+    post_date: item.post_date,
+    contributor: item.contributor,
+    title_character: item.title_character,
+    coupon: item.coupon,
+    post_text: item.post_text,
+    category: item.category,
+    imageWidth: 100,
+    imageHeight: 100,
+    _id: item._id,
+  }));
+
+  const navigate = useNavigate();
+  const addBlog = () => {
+    navigate("/add-blog");
+  };
+
+  return (
+    <>
+      <div className="container-xl min-h-screen">
+        <div className="flex justify-center pt-6">
+          <Box>
+            <Button variant="contained" className="w-48 py-2" onClick={addBlog}>
+              ブログ追加
+            </Button>
+          </Box>
+        </div>
+        <div className="px-12 pt-16 max-md:px-0">
+          <div blog={{ height: "100%", width: "100%" }}>
+            <ThemeProvider theme={theme}>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 10 },
+                  },
+                }}
+                pageSizeOptions={[5, 10, 20, 30]}
+                checkboxSelection
+                rowHeight={120}
+              />
+            </ThemeProvider>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default BlogList;

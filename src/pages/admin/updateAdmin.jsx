@@ -54,299 +54,301 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Checkbox from "@mui/material/Checkbox";
 
 const UpdateAdmin = () => {
-	const navigate = useNavigate();
-	const location = useLocation();
-	const searchParams = new URLSearchParams(location.search);
-	const id = searchParams.get("id");
-	const [userList, setUserList] = useState([]);
-	const [data, setData] = useState({
-		email: "",
-		username: "",
-		style_tokyo_id: "",
-		salon_id: "",
-		permission: "",
-	});
-	const [errors, setErrors] = useState({
-		email: "",
-		username: "",
-		style_tokyo_id: "",
-		salon_id: "",
-		permission: "",
-	});
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const id = searchParams.get("id");
+  const [userList, setUserList] = useState([]);
+  const [data, setData] = useState({
+    email: "",
+    username: "",
+    style_tokyo_id: "",
+    salon_id: "",
+    permission: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    username: "",
+    style_tokyo_id: "",
+    salon_id: "",
+    permission: "",
+  });
 
-	const handleChangeTextarea = (e) => {
-		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
-		setErrors((data) => ({ ...data, [e.target.name]: "" }));
-	};
+  const handleChangeTextarea = (e) => {
+    setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+    setErrors((data) => ({ ...data, [e.target.name]: "" }));
+  };
 
-	//select
-	const handleChangeSelect = (e) => {
-		setData((data) => ({ ...data, [e.target.name]: e.target.value }));
-		setErrors((data) => ({ ...data, [e.target.name]: "" }));
-	};
+  //select
+  const handleChangeSelect = (e) => {
+    setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+    setErrors((data) => ({ ...data, [e.target.name]: "" }));
+  };
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios.get(`http://localhost:4000/${id}`);
-				setUserList(response.data);
-				setData({
-					email: response.data.email,
-					username: response.data.username,
-					style_tokyo_id: response.data.style_tokyo_id,
-					salon_id: response.data.salon_id,
-					permission: response.data.permission,
-				});
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		fetchData();
-	}, [id]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `https://os3-318-48579.vs.sakura.ne.jp/api/user/${id}`
+        );
+        setUserList(response.data);
+        setData({
+          email: response.data.email,
+          username: response.data.username,
+          style_tokyo_id: response.data.style_tokyo_id,
+          salon_id: response.data.salon_id,
+          permission: response.data.permission,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [id]);
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		const formData = new FormData();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
 
-		const validationErrors = {};
-		if (!data.email) {
-			validationErrors.email = "この項目は必須です。";
-		}
-		if (!data.username) {
-			validationErrors.username = "この項目は必須です。";
-		}
+    const validationErrors = {};
+    if (!data.email) {
+      validationErrors.email = "この項目は必須です。";
+    }
+    if (!data.username) {
+      validationErrors.username = "この項目は必須です。";
+    }
 
-		if (!data.style_tokyo_id) {
-			validationErrors.style_tokyo_id = "この項目は必須です。";
-		}
+    if (!data.style_tokyo_id) {
+      validationErrors.style_tokyo_id = "この項目は必須です。";
+    }
 
-		if (!data.salon_id) {
-			validationErrors.salon_id = "この項目は必須です。";
-		}
+    if (!data.salon_id) {
+      validationErrors.salon_id = "この項目は必須です。";
+    }
 
-		if (!data.permission) {
-			validationErrors.permission = "この項目は必須です。";
-		}
-		if (Object.keys(validationErrors).length > 0) {
-			setErrors(validationErrors);
-			return;
-		}
+    if (!data.permission) {
+      validationErrors.permission = "この項目は必須です。";
+    }
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
-		axios
-			.put(`http://localhost:4000/${id}`, data)
-			.then((res) => {
-				console.log(res.data.message);
-				navigate("/admin");
-			})
-			.catch((err) => {
-				console.log("Error couldn't update blog");
-				console.log(err.message);
-			});
-	};
+    axios
+      .put(`https://os3-318-48579.vs.sakura.ne.jp/api/user/${id}`, data)
+      .then((res) => {
+        console.log(res.data.message);
+        navigate("/admin");
+      })
+      .catch((err) => {
+        console.log("Error couldn't update blog");
+        console.log(err.message);
+      });
+  };
 
-	const handleDelete = () => {
-		axios
-			.delete(`http://localhost:4000/${id}`)
-			.then((res) => {
-				console.log(res.data.message);
-				navigate("/admin");
-			})
-			.catch((err) => {
-				console.log("Error couldn't delete Blog");
-				console.log(err.message);
-			});
-	};
-	return (
-		<>
-			<div className="container-xl min-h-screen">
-				<div className="min-h-full">
-					<Stylenav />
-					<header className="bg-white shadow">
-						<div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
-							<h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
-								管理者ページ
-							</h1>
-						</div>
-					</header>
-					<main>
-						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
-							<div className="flex flex-col justify-center items-center w-full">
-								<Box
-									sx={{ flexGrow: 1 }}
-									className="w-full max-w-3xl mx-auto pt-12"
-								>
-									<AppBar position="static" className="rounded-t-lg">
-										<Toolbar>
-											{/* <IconButton
+  const handleDelete = () => {
+    axios
+      .delete(`https://os3-318-48579.vs.sakura.ne.jp/api/user/${id}`)
+      .then((res) => {
+        console.log(res.data.message);
+        navigate("/admin");
+      })
+      .catch((err) => {
+        console.log("Error couldn't delete Blog");
+        console.log(err.message);
+      });
+  };
+  return (
+    <>
+      <div className="container-xl min-h-screen">
+        <div className="min-h-full">
+          <Stylenav />
+          <header className="bg-white shadow">
+            <div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
+                管理者ページ
+              </h1>
+            </div>
+          </header>
+          <main>
+            <div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
+              <div className="flex flex-col justify-center items-center w-full">
+                <Box
+                  sx={{ flexGrow: 1 }}
+                  className="w-full max-w-3xl mx-auto pt-12"
+                >
+                  <AppBar position="static" className="rounded-t-lg">
+                    <Toolbar>
+                      {/* <IconButton
 															size="large"
 															edge="start"
 															color="inherit"
 															aria-label="menu"
 															sx={{ mr: 2 }}
 														> */}
-											{/* <MenuIcon className="mr-6" /> */}
-											{/* </IconButton> */}
-											<Typography
-												variant="h6"
-												component="div"
-												sx={{ flexGrow: 1 }}
-											>
-												ユーザー権限設定
-											</Typography>
-											{/* <Button color="inherit">Login</Button> */}
-										</Toolbar>
-									</AppBar>
-									<form onSubmit={handleSubmit}>
-										<Card className="flex justify-center w-full">
-											<CardContent className="rounded-tr-none">
-												<div className="flex justify-content pl-20 pb-3 pt-3 w-full flex-col max-md:px-0">
-													<Box>
-														<div className="mt-3 mb-3">
-															電子メール
-															<span className="text-red-600 text-xs pl-2">
-																*必須"
-															</span>
-														</div>
-														<div className="flex flex-row pb-2">
-															<input
-																type="email"
-																name="email"
-																onChange={handleChangeTextarea}
-																value={data.email}
-																className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
-															/>
-														</div>
-														{errors.email && (
-															<span className="text-red-700 text-base">
-																{errors.email}
-															</span>
-														)}
-													</Box>
-													<Box>
-														<div className="mt-3 mb-3">
-															ユーザー名
-															<span className="text-red-600 text-xs pl-2">
-																*必須"
-															</span>
-														</div>
-														<div className="flex flex-row pb-2">
-															<input
-																type="text"
-																name="username"
-																onChange={handleChangeTextarea}
-																value={data.username}
-																className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
-															/>
-														</div>
-														{errors.username && (
-															<span className="text-red-700 text-base">
-																{errors.username}
-															</span>
-														)}
-													</Box>
-													<Box>
-														<div className="mt-3 mb-3">
-															STYLE TOKYO ID
-															<span className="text-red-600 text-xs pl-2">
-																*必須"
-															</span>
-														</div>
-														<div className="flex flex-row pb-2">
-															<input
-																type="text"
-																name="style_tokyo_id"
-																onChange={handleChangeTextarea}
-																value={data.style_tokyo_id}
-																className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
-															/>
-														</div>
-														{errors.style_tokyo_id && (
-															<span className="text-red-700 text-base">
-																{errors.style_tokyo_id}
-															</span>
-														)}
-													</Box>
-													<Box>
-														<div className="mt-3 mb-3">
-															Salon ID
-															<span className="text-red-600 text-xs pl-2">
-																*必須"
-															</span>
-														</div>
-														<div className="flex flex-row pb-2">
-															<input
-																type="text"
-																name="salon_id"
-																onChange={handleChangeTextarea}
-																value={data.salon_id}
-																className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
-															/>
-														</div>
-														{errors.salon_id && (
-															<span className="text-red-700 text-base">
-																{errors.salon_id}
-															</span>
-														)}
-													</Box>
-													<Box className="pb-6 mt-4 w-[24rem]">
-														<Typography className="pb-3">権限</Typography>
-														<FormControl className="w-full">
-															<InputLabel id="demo-simple-select-label">
-																権限
-															</InputLabel>
-															<Select
-																labelId="demo-simple-select-label"
-																id="demo-simple-select"
-																value={data.permission}
-																name="permission"
-																label="なし"
-																onChange={handleChangeSelect}
-															>
-																<MenuItem value={"manager"}>管理者</MenuItem>
-																<MenuItem value={"user"}>ユーザー</MenuItem>
-																<MenuItem value={"not"}>権限なし</MenuItem>
-															</Select>
-														</FormControl>
-													</Box>
-												</div>
-											</CardContent>
-										</Card>
-										<div className="mt-8 mb-8 flex justify-center gap-x-14 max-md:flex-wrap-reverse max-md:gap-y-6">
-											<Box
-												sx={{ minWidth: 300 }}
-												className="flex justify-center items-center"
-											>
-												<Button
-													variant="contained"
-													className="py-3 w-72 text-4xl"
-													style={{ backgroundColor: "#ef4444" }}
-													onClick={handleDelete}
-												>
-													削除
-												</Button>
-											</Box>
-											<Box
-												sx={{ minWidth: 300 }}
-												className="flex justify-center items-center"
-											>
-												<Button
-													variant="contained"
-													className="py-3 w-72"
-													type="submit"
-												>
-													更新
-												</Button>
-											</Box>
-										</div>
-									</form>
-								</Box>
-							</div>
-						</div>
-					</main>
-				</div>
-			</div>
-		</>
-	);
+                      {/* <MenuIcon className="mr-6" /> */}
+                      {/* </IconButton> */}
+                      <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{ flexGrow: 1 }}
+                      >
+                        ユーザー権限設定
+                      </Typography>
+                      {/* <Button color="inherit">Login</Button> */}
+                    </Toolbar>
+                  </AppBar>
+                  <form onSubmit={handleSubmit}>
+                    <Card className="flex justify-center w-full">
+                      <CardContent className="rounded-tr-none">
+                        <div className="flex justify-content pl-20 pb-3 pt-3 w-full flex-col max-md:px-0">
+                          <Box>
+                            <div className="mt-3 mb-3">
+                              電子メール
+                              <span className="text-red-600 text-xs pl-2">
+                                *必須"
+                              </span>
+                            </div>
+                            <div className="flex flex-row pb-2">
+                              <input
+                                type="email"
+                                name="email"
+                                onChange={handleChangeTextarea}
+                                value={data.email}
+                                className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                              />
+                            </div>
+                            {errors.email && (
+                              <span className="text-red-700 text-base">
+                                {errors.email}
+                              </span>
+                            )}
+                          </Box>
+                          <Box>
+                            <div className="mt-3 mb-3">
+                              ユーザー名
+                              <span className="text-red-600 text-xs pl-2">
+                                *必須"
+                              </span>
+                            </div>
+                            <div className="flex flex-row pb-2">
+                              <input
+                                type="text"
+                                name="username"
+                                onChange={handleChangeTextarea}
+                                value={data.username}
+                                className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                              />
+                            </div>
+                            {errors.username && (
+                              <span className="text-red-700 text-base">
+                                {errors.username}
+                              </span>
+                            )}
+                          </Box>
+                          <Box>
+                            <div className="mt-3 mb-3">
+                              STYLE TOKYO ID
+                              <span className="text-red-600 text-xs pl-2">
+                                *必須"
+                              </span>
+                            </div>
+                            <div className="flex flex-row pb-2">
+                              <input
+                                type="text"
+                                name="style_tokyo_id"
+                                onChange={handleChangeTextarea}
+                                value={data.style_tokyo_id}
+                                className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                              />
+                            </div>
+                            {errors.style_tokyo_id && (
+                              <span className="text-red-700 text-base">
+                                {errors.style_tokyo_id}
+                              </span>
+                            )}
+                          </Box>
+                          <Box>
+                            <div className="mt-3 mb-3">
+                              Salon ID
+                              <span className="text-red-600 text-xs pl-2">
+                                *必須"
+                              </span>
+                            </div>
+                            <div className="flex flex-row pb-2">
+                              <input
+                                type="text"
+                                name="salon_id"
+                                onChange={handleChangeTextarea}
+                                value={data.salon_id}
+                                className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                              />
+                            </div>
+                            {errors.salon_id && (
+                              <span className="text-red-700 text-base">
+                                {errors.salon_id}
+                              </span>
+                            )}
+                          </Box>
+                          <Box className="pb-6 mt-4 w-[24rem]">
+                            <Typography className="pb-3">権限</Typography>
+                            <FormControl className="w-full">
+                              <InputLabel id="demo-simple-select-label">
+                                権限
+                              </InputLabel>
+                              <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={data.permission}
+                                name="permission"
+                                label="なし"
+                                onChange={handleChangeSelect}
+                              >
+                                <MenuItem value={"manager"}>管理者</MenuItem>
+                                <MenuItem value={"user"}>ユーザー</MenuItem>
+                                <MenuItem value={"not"}>権限なし</MenuItem>
+                              </Select>
+                            </FormControl>
+                          </Box>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <div className="mt-8 mb-8 flex justify-center gap-x-14 max-md:flex-wrap-reverse max-md:gap-y-6">
+                      <Box
+                        sx={{ minWidth: 300 }}
+                        className="flex justify-center items-center"
+                      >
+                        <Button
+                          variant="contained"
+                          className="py-3 w-72 text-4xl"
+                          style={{ backgroundColor: "#ef4444" }}
+                          onClick={handleDelete}
+                        >
+                          削除
+                        </Button>
+                      </Box>
+                      <Box
+                        sx={{ minWidth: 300 }}
+                        className="flex justify-center items-center"
+                      >
+                        <Button
+                          variant="contained"
+                          className="py-3 w-72"
+                          type="submit"
+                        >
+                          更新
+                        </Button>
+                      </Box>
+                    </div>
+                  </form>
+                </Box>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default UpdateAdmin;
