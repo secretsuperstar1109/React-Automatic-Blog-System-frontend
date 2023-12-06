@@ -56,44 +56,44 @@ import Coupon from "./coupon";
 import Stylist from "./stylist";
 
 const StyleSetting = () => {
-	const [key, setKey] = useState("general");
+  const [key, setKey] = useState("general");
 
-	return (
-		<>
-			<div className="container-xl min-h-screen">
-				<div className="min-h-full">
-					<Stylenav />
-					<header className="bg-white shadow">
-						<div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
-							<h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
-								設定
-							</h1>
-						</div>
-					</header>
-					<main>
-						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
-							<Tabs
-								id="controlled-tab-example"
-								activeKey={key}
-								onSelect={(k) => setKey(k)}
-								className="mb-3"
-							>
-								<Tab eventKey="general" title="一般">
-									<General />
-								</Tab>
-								<Tab eventKey="stylist" title="スタイリスト">
-									<Stylist />
-								</Tab>
-								<Tab eventKey="coupon" title="クーポン">
-									<Coupon />
-								</Tab>
-							</Tabs>
-						</div>
-					</main>
-				</div>
-			</div>
-		</>
-	);
+  return (
+    <>
+      <div className="container-xl min-h-screen">
+        <div className="min-h-full">
+          <Stylenav />
+          <header className="bg-white shadow">
+            <div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
+                設定
+              </h1>
+            </div>
+          </header>
+          <main>
+            <div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4">
+              <Tabs
+                id="controlled-tab-example"
+                activeKey={key}
+                onSelect={(k) => setKey(k)}
+                className="mb-3"
+              >
+                <Tab eventKey="general" title="一般">
+                  <General />
+                </Tab>
+                <Tab eventKey="stylist" title="スタイリスト">
+                  <Stylist />
+                </Tab>
+                <Tab eventKey="coupon" title="クーポン">
+                  <Coupon />
+                </Tab>
+              </Tabs>
+            </div>
+          </main>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default StyleSetting;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -30,93 +30,109 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 //textfield
 import TextField from "@mui/material/TextField";
-//table
-import { DataGrid } from "@mui/x-data-grid";
+//datagrid
+import { DataGrid, jaJP } from "@mui/x-data-grid";
+//
+import { prefixer } from "stylis";
+import rtlPlugin from "stylis-plugin-rtl";
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 
 function classNames(...classes) {
-	return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(" ");
 }
 
 const Coupon = () => {
-	const navigate = useNavigate();
-	const add_style = () => {
-		navigate("/add-style");
-	};
-	const columns = [
-		{ field: "id", headerName: "番号", type: "number", width: 50 },
-		{
-			field: "image",
-			headerName: "画像",
-			width: 200,
-			renderCell: (params) => (
-				<img
-					src={params.row.image}
-					alt=""
-					width={params.row.imageWidth}
-					height={params.row.imageHeight}
-				/>
-			),
-		},
-		{ field: "style_name", headerName: "クーポン名", type: "text", width: 250 },
-	];
+  const navigate = useNavigate();
+  const add_style = () => {
+    navigate("/add-style");
+  };
 
-	const rows = [
-		{
-			id: 1,
-			image:
-				"https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format",
-			style_name: "Jon",
-			imageWidth: 100,
-			imageHeight: 100,
-		},
-		{
-			id: 2,
-			image:
-				"https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format",
-			style_name: "Jon",
-			imageWidth: 100,
-			imageHeight: 100,
-		},
-		{
-			id: 3,
-			image:
-				"https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=164&h=164&fit=crop&auto=format",
-			style_name: "Jon",
-			imageWidth: 100,
-			imageHeight: 100,
-		},
-	];
+  const existingTheme = useTheme();
 
-	return (
-		<>
-			<div className="container-xl min-h-screen">
-				<div className="flex flex-col justify-center items-center w-full">
-					<div className="mt-8 flex justify-center items-center gap-x-6 flex-wrap max-md:gap-y-6">
-						<Button variant="contained" className="py-2 w-48">
-							同期する
-						</Button>
-						<Typography variant="h7">最終同期 2023-11-13 10:41</Typography>
-					</div>
-					<div className="px-12 pt-10 w-3/7 max-md:w-full max-md:px-0">
-						<div style={{ height: "100%", width: "100%" }}>
-							<DataGrid
-								rows={rows}
-								columns={columns}
-								initialState={{
-									pagination: {
-										paginationModel: { page: 0, pageSize: 10 },
-									},
-								}}
-								pageSizeOptions={[5, 10, 20, 30]}
-								checkboxSelection
-								rowHeight={120}
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</>
-	);
+  const theme = useMemo(
+    () => createTheme({}, jaJP, existingTheme),
+    [existingTheme]
+  );
+
+  const columns = [
+    { field: "id", headerName: "番号", type: "number", width: 50 },
+    {
+      field: "image",
+      headerName: "画像",
+      width: 200,
+      renderCell: (params) => (
+        <img
+          src={params.row.image}
+          alt=""
+          width={params.row.imageWidth}
+          height={params.row.imageHeight}
+        />
+      ),
+    },
+    { field: "style_name", headerName: "クーポン名", type: "text", width: 250 },
+  ];
+
+  const rows = [
+    {
+      id: 1,
+      image:
+        "https://os3-318-48579.vs.sakura.ne.jp/images/2d8094f9-5fa3-41e9-ae23-2c0b3fb55002-1701826965023.png",
+      style_name: "a",
+      imageWidth: 100,
+      imageHeight: 100,
+    },
+    {
+      id: 2,
+      image:
+        "https://os3-318-48579.vs.sakura.ne.jp/images/2d8094f9-5fa3-41e9-ae23-2c0b3fb55002-1701826965023.png",
+      style_name: "a",
+      imageWidth: 100,
+      imageHeight: 100,
+    },
+    {
+      id: 3,
+      image:
+        "https://os3-318-48579.vs.sakura.ne.jp/images/2d8094f9-5fa3-41e9-ae23-2c0b3fb55002-1701826965023.png",
+      style_name: "a",
+      imageWidth: 100,
+      imageHeight: 100,
+    },
+  ];
+
+  return (
+    <>
+      <div className="container-xl min-h-screen">
+        <div className="flex flex-col justify-center items-center w-full">
+          <div className="mt-8 flex justify-center items-center gap-x-6 flex-wrap max-md:gap-y-6">
+            <Button variant="contained" className="py-2 w-48">
+              同期する
+            </Button>
+            <Typography variant="h7">最終同期 2023-11-13 10:41</Typography>
+          </div>
+          <div className="px-12 pt-10 w-3/7 max-md:w-full max-md:px-0">
+            <div style={{ height: "100%", width: "100%" }}>
+              <ThemeProvider theme={theme}>
+                <DataGrid
+                  rows={rows}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10, 20, 30]}
+                  checkboxSelection
+                  rowHeight={120}
+                />
+              </ThemeProvider>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Coupon;

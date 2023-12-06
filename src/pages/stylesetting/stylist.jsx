@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -30,85 +30,102 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 //textfield
 import TextField from "@mui/material/TextField";
-//table
-import { DataGrid } from "@mui/x-data-grid";
+//datagrid
+import { DataGrid, jaJP } from "@mui/x-data-grid";
+//
+import { prefixer } from "stylis";
+import rtlPlugin from "stylis-plugin-rtl";
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 
 function classNames(...classes) {
-	return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(" ");
 }
 
 const Stylist = () => {
-	const [userData, setUserData] = useState([]);
-	const navigate = useNavigate();
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios.get("http://localhost:4000/");
-				const stylist_name = response.data.filter(
-					(item) => item.permission === "user"
-				);
-				// console.log("userData: ", stylist_name);
-				setUserData(stylist_name);
-				// console.log(response.data);
-				// setStylelist(response.data);
-				// console.log("stylelist: ", response.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		fetchData();
-	}, []);
-	const columns = [
-		{
-			field: "id",
-			headerName: "番号",
-			type: "number",
-			width: 100,
-			align: "center",
-			headerAlign: "center",
-		},
-		{
-			field: "username",
-			headerName: "美容師",
-			width: 300,
-		},
-	];
-	console.log("userData: ", userData);
-	const rows = userData.map((item, index) => ({
-		id: index + 1,
-		username: item.username,
-	}));
+  const [userData, setUserData] = useState([]);
 
-	return (
-		<>
-			<div className="container-xl min-h-screen">
-				<div className="flex flex-col justify-center items-center w-full">
-					<div className="mt-8 flex justify-center items-center gap-x-6 flex-wrap max-md:gap-y-6">
-						<Button variant="contained" className="py-2 w-48">
-							同期する
-						</Button>
-						<Typography variant="h7">最終同期 2023-11-13 10:41</Typography>
-					</div>
-					<div className="px-12 pt-10 w-3/7 max-md:w-full max-md:px-0">
-						<div style={{ height: "100%", width: "100%" }}>
-							<DataGrid
-								rows={rows}
-								columns={columns}
-								initialState={{
-									pagination: {
-										paginationModel: { page: 0, pageSize: 10 },
-									},
-								}}
-								pageSizeOptions={[5, 10, 20, 30]}
-								checkboxSelection
-								rowHeight={120}
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</>
-	);
+  const existingTheme = useTheme();
+
+  const theme = useMemo(
+    () => createTheme({}, jaJP, existingTheme),
+    [existingTheme]
+  );
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://os3-318-48579.vs.sakura.ne.jp/api/user"
+        );
+        const stylist_name = response.data.filter(
+          (item) => item.permission === "user"
+        );
+        // console.log("userData: ", stylist_name);
+        setUserData(stylist_name);
+        // console.log(response.data);
+        // setStylelist(response.data);
+        // console.log("stylelist: ", response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+  const columns = [
+    {
+      field: "id",
+      headerName: "番号",
+      type: "number",
+      width: 100,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "username",
+      headerName: "美容師",
+      width: 300,
+    },
+  ];
+  console.log("userData: ", userData);
+  const rows = userData.map((item, index) => ({
+    id: index + 1,
+    username: item.username,
+  }));
+
+  return (
+    <>
+      <div className="container-xl min-h-screen">
+        <div className="flex flex-col justify-center items-center w-full">
+          <div className="mt-8 flex justify-center items-center gap-x-6 flex-wrap max-md:gap-y-6">
+            <Button variant="contained" className="py-2 w-48">
+              同期する
+            </Button>
+            <Typography variant="h7">最終同期 2023-11-13 10:41</Typography>
+          </div>
+          <div className="px-12 pt-10 w-3/7 max-md:w-full max-md:px-0">
+            <div style={{ height: "100%", width: "100%" }}>
+              <ThemeProvider theme={theme}>
+                <DataGrid
+                  rows={rows}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10, 20, 30]}
+                  checkboxSelection
+                  rowHeight={120}
+                />
+              </ThemeProvider>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Stylist;

@@ -1,8 +1,8 @@
 import React from "react";
 import Stylenav from "../Stylenav";
 
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
@@ -52,127 +52,151 @@ import RadioGroup from "@mui/material/RadioGroup";
 //checkbox
 import Checkbox from "@mui/material/Checkbox";
 //datagrid
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, jaJP } from "@mui/x-data-grid";
+//
+import { prefixer } from "stylis";
+import rtlPlugin from "stylis-plugin-rtl";
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 
 const Admin = () => {
-	const [userList, setUserList] = useState([]);
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await axios.get("http://localhost:4000/");
-				// console.log(response.data);
-				setUserList(response.data);
-				console.log("userlist: ", response.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
+  const [userList, setUserList] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://os3-318-48579.vs.sakura.ne.jp/api/user"
+        );
+        // console.log(response.data);
+        setUserList(response.data);
+        console.log("userlist: ", response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-		fetchData();
-	}, []);
+    fetchData();
+  }, []);
 
-	const columns = [
-		{
-			field: "id",
-			headerName: "番号",
-			type: "number",
-			width: 50,
-			align: "center",
-			headerAlign: "center",
-		},
-		{
-			field: "email",
-			headerName: "電子メール",
-			type: "text",
-			width: 250,
-			renderCell: (params) => (
-				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-		{
-			field: "username",
-			headerName: "ユーザー名",
-			type: "text",
-			width: 200,
-			renderCell: (params) => (
-				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-		{
-			field: "style_tokyo_id",
-			headerName: "Style-Tokyo-Id",
-			type: "text",
-			width: 200,
-			renderCell: (params) => (
-				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-		{
-			field: "salon_id",
-			headerName: "Salon-Id",
-			type: "text",
-			width: 200,
-			renderCell: (params) => (
-				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-		{
-			field: "permission",
-			headerName: "権限",
-			type: "text",
-			width: 150,
-			renderCell: (params) => (
-				<a href={`/update-admin?id=${params.row._id}`}>{params.value}</a>
-			),
-		},
-	];
+  // Create rtl cache
+  //   const cacheRtl = createCache({
+  //     key: "data-grid-rtl-demo",
+  //     stylisPlugins: [prefixer, rtlPlugin],
+  //   });
+  const existingTheme = useTheme();
 
-	const rows = userList.map((item, index) => ({
-		id: index + 1,
-		email: item.email,
-		username: item.username,
-		style_tokyo_id: item.style_tokyo_id,
-		salon_id: item.salon_id,
-		permission: item.permission,
-		_id: item._id,
-	}));
+  const theme = useMemo(
+    () => createTheme({}, jaJP, existingTheme),
+    [existingTheme]
+  );
 
-	return (
-		<>
-			<div className="container-xl min-h-screen">
-				<div className="min-h-full">
-					<Stylenav />
-					<header className="bg-white shadow">
-						<div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
-							<h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
-								管理者ページ
-							</h1>
-						</div>
-					</header>
-					<main>
-						<div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4 flex justify-center">
-							<div className="px-12 pt-16 max-md:px-0 max-w-[80rem] max-xl:max-w-[60rem] max-lg:max-w-[50rem] max-md:max-w-full">
-								<div blog={{ height: "100%", width: "100%" }}>
-									<DataGrid
-										rows={rows}
-										columns={columns}
-										initialState={{
-											pagination: {
-												paginationModel: { page: 0, pageSize: 10 },
-											},
-										}}
-										pageSizeOptions={[5, 10, 20, 30]}
-										checkboxSelection
-										rowHeight={120}
-									/>
-								</div>
-							</div>
-						</div>
-					</main>
-				</div>
-			</div>
-		</>
-	);
+  const columns = [
+    {
+      field: "id",
+      headerName: "番号",
+      type: "number",
+      width: 50,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "email",
+      headerName: "電子メール",
+      type: "text",
+      width: 250,
+      renderCell: (params) => (
+        <Link to={`/update-admin?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: "username",
+      headerName: "ユーザー名",
+      type: "text",
+      width: 200,
+      renderCell: (params) => (
+        <Link to={`/update-admin?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: "style_tokyo_id",
+      headerName: "Style-Tokyo-Id",
+      type: "text",
+      width: 200,
+      renderCell: (params) => (
+        <Link to={`/update-admin?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: "salon_id",
+      headerName: "Salon-Id",
+      type: "text",
+      width: 200,
+      renderCell: (params) => (
+        <Link to={`/update-admin?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: "permission",
+      headerName: "権限",
+      type: "text",
+      width: 150,
+      renderCell: (params) => (
+        <Link to={`/update-admin?id=${params.row._id}`}>{params.value}</Link>
+      ),
+    },
+  ];
+
+  const rows = userList.map((item, index) => ({
+    id: index + 1,
+    email: item.email,
+    username: item.username,
+    style_tokyo_id: item.style_tokyo_id,
+    salon_id: item.salon_id,
+    permission: item.permission,
+    _id: item._id,
+  }));
+
+  return (
+    <>
+      <div className="container-xl min-h-screen">
+        <div className="min-h-full">
+          <Stylenav />
+          <header className="bg-white shadow">
+            <div className="mx-4 max-w-full px-4 py-6 sm:px-6 lg:px-8">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 max-md:text-xl">
+                管理者ページ
+              </h1>
+            </div>
+          </header>
+          <main>
+            <div className="px-16 max-w-full py-6 sm:px-6 lg:px-8 bg-[#9ca3af0d] min-h-[50.6rem] max-md:px-4 flex justify-center">
+              <div className="px-12 pt-16 max-md:px-0 max-w-[80rem] max-xl:max-w-[60rem] max-lg:max-w-[50rem] max-md:max-w-full">
+                <div blog={{ height: "100%", width: "100%" }}>
+                  {/* <CacheProvider value={cacheRtl}> */}
+                  <ThemeProvider theme={theme}>
+                    <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: { page: 0, pageSize: 10 },
+                        },
+                      }}
+                      pageSizeOptions={[5, 10, 20, 30]}
+                      checkboxSelection
+                      rowHeight={120}
+                    />
+                  </ThemeProvider>
+                  {/* </CacheProvider> */}
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Admin;
