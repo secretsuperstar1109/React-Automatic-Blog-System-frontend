@@ -202,7 +202,7 @@ const UpdateAdmin = () => {
                     <Card className="flex justify-center w-full">
                       <CardContent className="rounded-tr-none">
                         <div className="flex justify-content pl-20 pb-3 pt-3 w-full flex-col max-md:px-0">
-                          <Box>
+                          <Box sx={{ minWidth: 250 }}>
                             <div className="mt-3 mb-3">
                               電子メール
                               <span className="text-red-600 text-xs pl-2">
@@ -215,7 +215,7 @@ const UpdateAdmin = () => {
                                 name="email"
                                 onChange={handleChangeTextarea}
                                 value={data.email}
-                                className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                                className="block mr-6 w-96 max-md:w-48 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                               />
                             </div>
                             {errors.email && (
@@ -224,7 +224,7 @@ const UpdateAdmin = () => {
                               </span>
                             )}
                           </Box>
-                          <Box>
+                          <Box sx={{ minWidth: 250 }}>
                             <div className="mt-3 mb-3">
                               ユーザー名
                               <span className="text-red-600 text-xs pl-2">
@@ -237,7 +237,7 @@ const UpdateAdmin = () => {
                                 name="username"
                                 onChange={handleChangeTextarea}
                                 value={data.username}
-                                className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                                className="block mr-6 w-96 max-md:w-48 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                               />
                             </div>
                             {errors.username && (
@@ -246,7 +246,7 @@ const UpdateAdmin = () => {
                               </span>
                             )}
                           </Box>
-                          <Box>
+                          <Box sx={{ minWidth: 250 }}>
                             <div className="mt-3 mb-3">
                               STYLE TOKYO ID
                               <span className="text-red-600 text-xs pl-2">
@@ -259,7 +259,7 @@ const UpdateAdmin = () => {
                                 name="style_tokyo_id"
                                 onChange={handleChangeTextarea}
                                 value={data.style_tokyo_id}
-                                className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                                className="block mr-6 w-96 max-md:w-48 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                               />
                             </div>
                             {errors.style_tokyo_id && (
@@ -268,7 +268,7 @@ const UpdateAdmin = () => {
                               </span>
                             )}
                           </Box>
-                          <Box>
+                          <Box sx={{ minWidth: 250 }}>
                             <div className="mt-3 mb-3">
                               Salon ID
                               <span className="text-red-600 text-xs pl-2">
@@ -281,7 +281,7 @@ const UpdateAdmin = () => {
                                 name="salon_id"
                                 onChange={handleChangeTextarea}
                                 value={data.salon_id}
-                                className="block mr-6 w-96 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                                className="block mr-6 w-96 max-md:w-48 rounded-md border-0 px-3 py-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                               />
                             </div>
                             {errors.salon_id && (
@@ -290,7 +290,10 @@ const UpdateAdmin = () => {
                               </span>
                             )}
                           </Box>
-                          <Box className="pb-6 mt-4 w-[24rem]">
+                          <Box
+                            sx={{ minWidth: 250 }}
+                            className="pb-6 mt-4 w-[24rem] max-md:w-[13rem]"
+                          >
                             <Typography className="pb-3">権限</Typography>
                             <FormControl className="w-full">
                               <InputLabel id="demo-simple-select-label">
